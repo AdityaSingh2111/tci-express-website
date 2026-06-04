@@ -1,26 +1,469 @@
+/* ==========================================================================
+   globals.css — Tailwind v4 Design System
+   Source: 03-design-system.md
+   ========================================================================== */
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* --------------------------------------------------------------------------
+   THEME: Color Palette
+   Ref: §1 Color Palette, §14 Footer Design, §10 Button Design System
+   -------------------------------------------------------------------------- */
+@theme {
+  /* Brand Colors */
+  --color-brand-blue: #0052CC;
+  --color-brand-red: #E53E3E;
+  --color-brand-black: #000000;
+  --color-brand-white: #FFFFFF;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Neutral Palette */
+  --color-text-gray: #4B5563;
+  --color-border-gray: #E5E7EB;
+  --color-surface-gray: #F9FAFB;
+  --color-footer-border: #333333;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  /* Semantic Aliases */
+  --color-primary: var(--color-brand-blue);
+  --color-cta: var(--color-brand-red);
+  --color-heading: var(--color-brand-black);
+  --color-body: var(--color-text-gray);
+  --color-border: var(--color-border-gray);
+  --color-surface: var(--color-surface-gray);
+  --color-background: var(--color-brand-white);
+
+  /* --------------------------------------------------------------------------
+     THEME: Typography Scale
+     Ref: §2 Typography System, §3 Font Pairing
+     Base: 16px (1rem). Modular scale 1.250.
+     -------------------------------------------------------------------------- */
+  --font-sans: "Inter", "Geist", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Geist Mono", ui-monospace, monospace;
+
+  --text-xs: 0.75rem;      /* 12px */
+  --text-sm: 0.875rem;     /* 14px — Labels, metadata */
+  --text-base: 1rem;       /* 16px — Body */
+  --text-lg: 1.125rem;     /* 18px */
+  --text-xl: 1.25rem;      /* 20px — H4 */
+  --text-2xl: 1.5rem;      /* 24px — H3 */
+  --text-3xl: 1.875rem;    /* 30px */
+  --text-4xl: 2.25rem;     /* 36px — H2 */
+  --text-5xl: 3rem;        /* 48px — H1 */
+  --text-6xl: 3.75rem;     /* 60px — Hero XL */
+
+  --leading-tight: 1.1;
+  --leading-snug: 1.2;
+  --leading-normal: 1.5;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0em;
+
+  /* --------------------------------------------------------------------------
+     THEME: Container & Layout
+     Ref: §5 Container Widths — max 1216px
+     -------------------------------------------------------------------------- */
+  --container-max: 1216px;
+  --spacing-section-desktop: 96px;
+  --spacing-section-tablet: 64px;
+  --spacing-section-mobile: 48px;
+
+  /* 8pt grid micro spacing */
+  --spacing-1: 8px;
+  --spacing-2: 16px;
+  --spacing-3: 24px;
+  --spacing-4: 32px;
+  --spacing-6: 48px;
+  --spacing-8: 64px;
+  --spacing-12: 96px;
+
+  /* --------------------------------------------------------------------------
+     THEME: Border Radius
+     Ref: §8 Border Radius System — sharp, enterprise-grade
+     -------------------------------------------------------------------------- */
+  --radius-sm: 4px;   /* Buttons, inputs */
+  --radius-md: 8px;   /* Cards, modals (maximum) */
+  --radius-none: 0px;
+
+  /* --------------------------------------------------------------------------
+     THEME: Shadow System
+     Ref: §9 Shadow System
+     -------------------------------------------------------------------------- */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-dropdown: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-modal: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+
+  /* --------------------------------------------------------------------------
+     THEME: Responsive Breakpoints
+     Ref: §6 Responsive Breakpoints
+     -------------------------------------------------------------------------- */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;   /* Mobile → Tablet boundary */
+  --breakpoint-lg: 1024px;  /* Tablet → Desktop boundary */
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1440px; /* Large Desktop */
+
+  /* --------------------------------------------------------------------------
+     THEME: Animation
+     Ref: §27 Animation Guidelines — 150–200ms, ease-out
+     -------------------------------------------------------------------------- */
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+  /* CSS Marquee */
+  --animate-marquee-desktop: marquee 38s linear infinite;
+  --animate-marquee-mobile: marquee 55s linear infinite;
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* --------------------------------------------------------------------------
+   BASE: Typography & Document Reset
+   -------------------------------------------------------------------------- */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    /* Structural: constrain root element to viewport width.
+       This is NOT a mask — it prevents layout overflow from propagating to scroll. */
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    color: var(--color-body);
+    background-color: var(--color-background);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    /* Structural: prevent body from ever exceeding viewport width.
+       overflow-x: clip does NOT create a BFC (unlike hidden) — it only clips painting. */
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  /* Heading typography — ref §2 */
+  h1 {
+    font-size: var(--text-5xl);
+    font-weight: 700;
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-heading);
+  }
+
+  h2 {
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-heading);
+  }
+
+  h3 {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    line-height: var(--leading-snug);
+    color: var(--color-heading);
+  }
+
+  h4 {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    line-height: var(--leading-snug);
+    color: var(--color-heading);
+  }
+
+  p {
+    line-height: var(--leading-normal);
+    color: var(--color-body);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Monospace for tracking IDs, timestamps, tabular data — ref §3, §19 */
+  code, kbd, samp, pre, .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  /* Focus rings — ref §30 Accessibility, §28 Desktop UX */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-blue);
+    outline-offset: 2px;
+  }
+
+  /* Touch targets — ref §29 Mobile UX
+     Applied per-component, not globally, to avoid breaking inline links, dropdowns, etc.
+     Interactive tap targets still ≥ 44px where it matters (buttons, nav items, form inputs). */
+
+  img, video {
+    max-width: 100%;
+    display: block;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   UTILITIES: Design System Component Classes
+   -------------------------------------------------------------------------- */
+@layer utilities {
+
+  /* Container — max 1216px centered, ref §5 */
+  .container-content {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  @media (min-width: 768px) {
+    .container-content {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-content {
+      padding-left: 32px;
+      padding-right: 32px;
+    }
+  }
+
+  /* Section spacing — ref §7 */
+  .section-padding {
+    padding-top: var(--spacing-section-mobile);
+    padding-bottom: var(--spacing-section-mobile);
+  }
+
+  @media (min-width: 768px) {
+    .section-padding {
+      padding-top: var(--spacing-section-tablet);
+      padding-bottom: var(--spacing-section-tablet);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section-padding {
+      padding-top: var(--spacing-section-desktop);
+      padding-bottom: var(--spacing-section-desktop);
+    }
+  }
+
+  /* ---- Buttons — ref §10 Button Design System ---- */
+
+  /* Primary CTA: Red bg, white text — "Get a Quote" */
+  .btn-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    background-color: var(--color-brand-red);
+    color: var(--color-brand-white);
+    font-weight: 500;
+    font-size: var(--text-base);
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    transition: opacity var(--duration-fast) var(--ease-out);
+    text-decoration: none;
+    line-height: 1;
+    min-height: 44px;
+  }
+
+  .btn-cta:hover {
+    opacity: 0.9;
+  }
+
+  /* Standard Primary: Black bg, white text */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    background-color: var(--color-brand-black);
+    color: var(--color-brand-white);
+    font-weight: 500;
+    font-size: var(--text-base);
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    transition: opacity var(--duration-fast) var(--ease-out);
+    text-decoration: none;
+    line-height: 1;
+    min-height: 44px;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.85;
+  }
+
+  /* Secondary: White bg, border-gray border, black text */
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    background-color: var(--color-brand-white);
+    color: var(--color-brand-black);
+    font-weight: 500;
+    font-size: var(--text-base);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border-gray);
+    cursor: pointer;
+    transition: background-color var(--duration-fast) var(--ease-out);
+    text-decoration: none;
+    line-height: 1;
+    min-height: 44px;
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-surface-gray);
+  }
+
+  /* Ghost: Transparent, black text, surface-gray on hover */
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    background-color: transparent;
+    color: var(--color-brand-black);
+    font-weight: 500;
+    font-size: var(--text-base);
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    transition: background-color var(--duration-fast) var(--ease-out);
+    text-decoration: none;
+    line-height: 1;
+    min-height: 44px;
+  }
+
+  .btn-ghost:hover {
+    background-color: var(--color-surface-gray);
+  }
+
+  /* ---- Cards — ref §11 Card Design System ---- */
+  .card {
+    background-color: var(--color-brand-white);
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-md);
+  }
+
+  .card:hover {
+    border-color: #D1D5DB; /* slightly darker on hover */
+    box-shadow: var(--shadow-card);
+  }
+
+  /* ---- Form Inputs — ref §12 Form Design System ---- */
+  .input-field {
+    width: 100%;
+    background-color: var(--color-brand-white);
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: var(--text-base);
+    color: var(--color-heading);
+    transition: border-color var(--duration-fast) var(--ease-out),
+                box-shadow var(--duration-fast) var(--ease-out);
+    min-height: 44px;
+    outline: none;
+  }
+
+  .input-field:focus {
+    border-color: var(--color-brand-blue);
+    box-shadow: 0 0 0 2px rgba(0, 82, 204, 0.2);
+  }
+
+  .input-field.error {
+    border-color: var(--color-brand-red);
+  }
+
+  .input-label {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-heading);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .input-error-text {
+    font-size: var(--text-sm);
+    color: var(--color-brand-red);
+    margin-top: 4px;
+  }
+
+  /* ---- Shadows ---- */
+  .shadow-card  { box-shadow: var(--shadow-card); }
+  .shadow-dropdown { box-shadow: var(--shadow-dropdown); }
+  .shadow-modal { box-shadow: var(--shadow-modal); }
+
+  /* ---- Typography Utilities ---- */
+  .text-heading { color: var(--color-heading); }
+  .text-body    { color: var(--color-body); }
+  .text-primary { color: var(--color-brand-blue); }
+  .text-cta     { color: var(--color-brand-red); }
+
+  .font-ui  { font-family: var(--font-sans); }
+  .font-data { font-family: var(--font-mono); }
+
+  /* Monospace tracking number display — ref §19 */
+  .tracking-id {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    letter-spacing: 0.04em;
+    color: var(--color-heading);
+  }
+
+  /* ---- Navbar ---- ref §13 */
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background-color: var(--color-brand-white);
+    border-bottom: 1px solid var(--color-border-gray);
+  }
+
+  /* ---- Footer ---- ref §14 */
+  .footer {
+    background-color: var(--color-brand-black);
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .footer-border {
+    border-top: 1px solid var(--color-footer-border);
+  }
+
+  /* ---- FAQ Accordion ---- ref §23 */
+  .faq-separator {
+    border-bottom: 1px solid var(--color-border-gray);
+  }
+
+  /* ---- Transitions — ref §27 ---- */
+  .transition-fast {
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-out);
+  }
+
+  .transition-base {
+    transition-duration: var(--duration-base);
+    transition-timing-function: var(--ease-out);
+  }
 }
