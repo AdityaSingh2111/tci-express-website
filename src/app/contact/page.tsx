@@ -1,7 +1,8 @@
 import React from "react";
 import type { Metadata } from "next";
-import { companyInfo } from "@/data/company";
-import { seoConfig } from "@/data/seo";
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
+import { seoConfig } from '@/config/seo';
 import { SectionContainer } from "@/components/shared/SectionContainer";
 import { SectionHeader } from "@/components/shared/SectionHeader";
 import { PrimaryButton } from "@/components/shared/PrimaryButton";
@@ -9,26 +10,26 @@ import { SecondaryButton } from "@/components/shared/SecondaryButton";
 import { ContactForm } from "@/components/forms/ContactForm";
 
 export const metadata: Metadata = {
-  title: `Contact Us | ${companyInfo.brandName}`,
-  description: `Get in touch with ${companyInfo.brandName} for premium logistics, household shifting, and corporate relocation services across India.`,
+  title: `Contact Us | ${companyConfig.brandName}`,
+  description: `Get in touch with ${companyConfig.brandName} for premium logistics, household shifting, and corporate relocation services across India.`,
   alternates: {
     canonical: `${seoConfig.siteUrl}/contact`,
   },
   openGraph: {
-    title: `Contact Us | ${companyInfo.brandName}`,
-    description: `Get in touch with ${companyInfo.brandName} for premium logistics, household shifting, and corporate relocation services across India.`,
+    title: `Contact Us | ${companyConfig.brandName}`,
+    description: `Get in touch with ${companyConfig.brandName} for premium logistics, household shifting, and corporate relocation services across India.`,
     url: `${seoConfig.siteUrl}/contact`,
-    siteName: companyInfo.brandName,
+    siteName: companyConfig.brandName,
   },
   twitter: {
     card: "summary_large_image",
-    title: `Contact Us | ${companyInfo.brandName}`,
-    description: `Get in touch with ${companyInfo.brandName} for premium logistics, household shifting, and corporate relocation services across India.`,
+    title: `Contact Us | ${companyConfig.brandName}`,
+    description: `Get in touch with ${companyConfig.brandName} for premium logistics, household shifting, and corporate relocation services across India.`,
   }
 };
 
 export default function ContactPage() {
-  const whatsappNumber = companyInfo.whatsapp.replace(/\D/g, "");
+  const whatsappNumber = contactConfig.whatsapp.replace(/\D/g, "");
   const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
     "Hi, I would like to inquire about relocation services."
   )}`;
@@ -41,12 +42,12 @@ export default function ContactPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "LocalBusiness",
-            name: companyInfo.brandName,
-            image: seoConfig.ogImage,
-            telephone: companyInfo.phone,
+            name: companyConfig.brandName,
+            image: `${seoConfig.siteUrl}/logos/logo-master.svg`,
+            telephone: contactConfig.phone,
             address: {
               "@type": "PostalAddress",
-              streetAddress: companyInfo.address,
+              streetAddress: companyConfig.headOfficeAddress,
               addressCountry: "IN"
             }
           })
@@ -72,16 +73,16 @@ export default function ContactPage() {
             <div className="flex flex-col gap-6">
               {/* Phone Card */}
               <div className="flex items-start gap-4 p-5 bg-white border border-[#E5E7EB] rounded-xl shadow-sm">
-                <div className="w-10 h-10 flex-shrink-0 bg-[#F9FAFB] rounded-full flex items-center justify-center text-[#0052CC]">
+                <div className="w-10 h-10 flex-shrink-0 bg-[#F9FAFB] rounded-full flex items-center justify-center text-brand-blue">
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
                   </svg>
                 </div>
                 <div>
                   <h3 className="text-[15px] font-bold text-[#000000]">Phone</h3>
-                  <p className="text-[14px] text-[#4B5563] mb-1.5">{companyInfo.phone}</p>
+                  <p className="text-[14px] text-[#4B5563] mb-1.5">{contactConfig.phone}</p>
                   {/* 5. Call CTA */}
-                  <a href={`tel:${companyInfo.phone}`} className="text-[13px] font-bold text-[#0052CC] hover:underline">
+                  <a href={`tel:${contactConfig.phone}`} className="text-[13px] font-bold text-brand-blue hover:underline">
                     Call Now &rarr;
                   </a>
                 </div>
@@ -96,7 +97,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="text-[15px] font-bold text-[#000000]">WhatsApp</h3>
-                  <p className="text-[14px] text-[#4B5563] mb-1.5">{companyInfo.whatsapp}</p>
+                  <p className="text-[14px] text-[#4B5563] mb-1.5">{contactConfig.whatsapp}</p>
                   {/* 4. WhatsApp CTA */}
                   <a href={waUrl} target="_blank" rel="noopener noreferrer" className="text-[13px] font-bold text-[#16A34A] hover:underline">
                     Chat on WhatsApp &rarr;
@@ -106,15 +107,15 @@ export default function ContactPage() {
 
               {/* Email Card */}
               <div className="flex items-start gap-4 p-5 bg-white border border-[#E5E7EB] rounded-xl shadow-sm">
-                <div className="w-10 h-10 flex-shrink-0 bg-[#F9FAFB] rounded-full flex items-center justify-center text-[#0052CC]">
+                <div className="w-10 h-10 flex-shrink-0 bg-[#F9FAFB] rounded-full flex items-center justify-center text-brand-blue">
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                   </svg>
                 </div>
                 <div>
                   <h3 className="text-[15px] font-bold text-[#000000]">Email</h3>
-                  <p className="text-[14px] text-[#4B5563] mb-1.5">{companyInfo.email}</p>
-                  <a href={`mailto:${companyInfo.email}`} className="text-[13px] font-bold text-[#0052CC] hover:underline">
+                  <p className="text-[14px] text-[#4B5563] mb-1.5">{contactConfig.supportEmail}</p>
+                  <a href={`mailto:${contactConfig.supportEmail}`} className="text-[13px] font-bold text-brand-blue hover:underline">
                     Send an Email &rarr;
                   </a>
                 </div>
@@ -132,7 +133,7 @@ export default function ContactPage() {
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             title="Our Headquarters"
-            subtitle={companyInfo.address}
+            subtitle={companyConfig.headOfficeAddress}
           />
           <div className="w-full h-[400px] bg-[#E5E7EB] rounded-xl flex items-center justify-center shadow-inner relative overflow-hidden">
             {/* Map visual placeholder */}

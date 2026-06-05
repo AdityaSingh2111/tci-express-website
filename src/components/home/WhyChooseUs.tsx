@@ -59,7 +59,7 @@ export function WhyChooseUs() {
   ];
 
   return (
-    <SectionContainer className="bg-[#00102A]">
+    <SectionContainer className="bg-brand-navy">
       <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
 
         {/* Left: Content */}
@@ -75,9 +75,9 @@ export function WhyChooseUs() {
             href="/quote"
             className={
               'inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold ' +
-              'text-white bg-[#E53E3E] rounded-lg ' +
+              'text-white bg-brand-red rounded-lg ' +
               'hover:bg-[#CC2A2A] transition-colors duration-150 ' +
-              'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E53E3E]'
+              'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-red'
             }
           >
             Get a Free Quote
@@ -91,7 +91,7 @@ export function WhyChooseUs() {
               key={feature.title}
               className="flex flex-col gap-3 p-5 rounded-xl bg-white/5 border border-white/8 hover:bg-white/8 transition-colors duration-200"
             >
-              <div className="w-9 h-9 rounded-lg bg-[#0052CC]/20 flex items-center justify-center shrink-0">
+              <div className="w-9 h-9 rounded-lg bg-brand-blue/20 flex items-center justify-center shrink-0">
                 <svg className="w-5 h-5 text-[#60A5FA]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
                   {feature.icon}
                 </svg>

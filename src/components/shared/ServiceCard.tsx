@@ -30,16 +30,16 @@ export function ServiceCard({ service }: ServiceCardProps) {
     <Link
       href={`/services/${service.slug}`}
       className={
-        'group relative flex flex-col bg-white rounded-xl border border-[#E5E7EB] p-5 ' +
-        'transition-all duration-200 ease-out ' +
-        'hover:border-[#0052CC]/25 hover:shadow-[0_4px_20px_rgba(0,82,204,0.08)] ' +
-        'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0052CC]'
+        'group relative flex flex-col bg-white rounded-[12px] border border-[#E5E7EB] p-5 md:p-6 ' +
+        'transition-all duration-200 ease-out hover:-translate-y-[2px] ' +
+        'hover:border-[#D1D5DB] hover:shadow-md ' +
+        'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue'
       }
     >
       {/* Icon */}
       <div className="w-10 h-10 rounded-lg bg-[#EEF4FF] flex items-center justify-center mb-4 transition-colors duration-200 group-hover:bg-[#DBEAFE]">
         <svg
-          className="w-5 h-5 text-[#0052CC]"
+          className="w-5 h-5 text-brand-blue"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -51,7 +51,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
       </div>
 
       {/* Content */}
-      <h3 className="text-[0.9375rem] font-semibold text-[#0D1117] mb-1.5 group-hover:text-[#0052CC] transition-colors duration-200">
+      <h3 className="text-[0.9375rem] font-semibold text-background-dark mb-1.5 group-hover:text-brand-blue transition-colors duration-200">
         {service.title}
       </h3>
       <p className="text-sm text-[#6B7280] leading-relaxed flex-1">
@@ -59,7 +59,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
       </p>
 
       {/* Arrow CTA */}
-      <div className="mt-4 flex items-center text-xs font-semibold text-[#0052CC] opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+      <div className="mt-4 flex items-center text-xs font-semibold text-brand-blue opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         Learn more
         <svg className="ml-1 w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />

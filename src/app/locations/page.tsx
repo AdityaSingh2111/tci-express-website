@@ -1,32 +1,35 @@
 import React from "react";
 import Image from "next/image";
 import type { Metadata } from "next";
-import { companyInfo } from "@/data/company";
-import { seoConfig } from "@/data/seo";
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
+import { seoConfig } from '@/config/seo';
+import { mediaConfig } from '@/config/media';
 import { branchesData } from "@/data/branches";
 import { InteractiveMapPins } from "@/components/home/InteractiveMapPins";
 import { citiesData } from "@/data/cities";
 import { SectionContainer } from "@/components/shared/SectionContainer";
 import { SectionHeader } from "@/components/shared/SectionHeader";
 import { CTAButton } from "@/components/shared/CTAButton";
+import { SearchBar } from "@/components/shared/SearchBar";
 import { BranchList } from "@/components/locations/BranchList";
 
 export const metadata: Metadata = {
-  title: `Branch Locator & Map | ${companyInfo.brandName}`,
-  description: `Find the nearest ${companyInfo.brandName} branch office. Search our pan-India network of logistics and relocation hubs.`,
+  title: `Branch Locator & Map | ${companyConfig.brandName}`,
+  description: `Find the nearest ${companyConfig.brandName} branch office. Search our pan-India network of logistics and relocation hubs.`,
   alternates: {
     canonical: `${seoConfig.siteUrl}/locations`,
   },
   openGraph: {
-    title: `Branch Locator & Map | ${companyInfo.brandName}`,
-    description: `Find the nearest ${companyInfo.brandName} branch office. Search our pan-India network of logistics and relocation hubs.`,
+    title: `Branch Locator & Map | ${companyConfig.brandName}`,
+    description: `Find the nearest ${companyConfig.brandName} branch office. Search our pan-India network of logistics and relocation hubs.`,
     url: `${seoConfig.siteUrl}/locations`,
-    siteName: companyInfo.brandName,
+    siteName: companyConfig.brandName,
   },
   twitter: {
     card: "summary_large_image",
-    title: `Branch Locator & Map | ${companyInfo.brandName}`,
-    description: `Find the nearest ${companyInfo.brandName} branch office. Search our pan-India network of logistics and relocation hubs.`,
+    title: `Branch Locator & Map | ${companyConfig.brandName}`,
+    description: `Find the nearest ${companyConfig.brandName} branch office. Search our pan-India network of logistics and relocation hubs.`,
   }
 };
 
@@ -42,21 +45,12 @@ export default function LocationsPage() {
         />
 
         {/* Enhanced Search UI */}
-        <div className="max-w-[700px] w-full px-4 md:px-0 mx-auto mt-10">
-          <form className="relative flex items-center bg-white border border-[#D1D5DB] rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] overflow-hidden focus-within:ring-2 focus-within:ring-[#0052CC]/20 focus-within:border-[#0052CC] transition-all h-12 md:h-14">
-            <label htmlFor="locationSearch" className="sr-only">Search by city, state, or branch</label>
-            <div className="pl-4 pr-3 md:pl-6 md:pr-4 flex items-center justify-center">
-              <svg className="w-5 h-5 text-[#9CA3AF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-              </svg>
-            </div>
-            <input
-              type="text"
-              id="locationSearch"
-              placeholder="Search by city, state, or branch"
-              className="w-full h-full outline-none text-[15px] md:text-base text-[#0D1117] bg-transparent pr-4 md:pr-6 placeholder-[#9CA3AF]"
-            />
-          </form>
+        <div className="max-w-[700px] w-full px-4 md:px-0 mx-auto mt-10 flex flex-col items-center">
+          <SearchBar 
+            id="locationSearch"
+            placeholder="Search by city, state, or branch"
+            aria-label="Search by city, state, or branch"
+          />
           <p className="text-center text-sm text-[#6B7280] mt-4">
             Showing all operational branches by default.
           </p>
@@ -83,8 +77,8 @@ export default function LocationsPage() {
               {/* Base Map Image */}
               <div className="absolute inset-0 opacity-80">
                 <Image 
-                  src="/images/map/india-map.png"
-                  alt={`Map of India showing ${companyInfo.brandName} branch locations`}
+                  src={mediaConfig.mapImage}
+                  alt={`Map of India showing ${companyConfig.brandName} branch locations`}
                   fill
                   className="object-contain object-center"
                   sizes="(max-width: 768px) 100vw, 460px"
@@ -99,7 +93,7 @@ export default function LocationsPage() {
           
           {/* Subtext STRICTLY below map container */}
           <div className="mt-8 text-center">
-            <p className="text-xl md:text-2xl font-bold text-[#0D1117] mb-2">45+ Service Locations</p>
+            <p className="text-xl md:text-2xl font-bold text-background-dark mb-2">45+ Service Locations</p>
             <p className="text-base text-[#6B7280]">Serving Major Cities Nationwide</p>
           </div>
         </div>
@@ -116,11 +110,11 @@ export default function LocationsPage() {
             {citiesData.map((city) => (
               <div key={city.code} className="flex items-center p-2 rounded hover:bg-[#F9FAFB] transition-colors">
                 {/* Brand blue location pin instead of green dot */}
-                <svg className="w-5 h-5 text-[#0052CC] mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg className="w-5 h-5 text-brand-blue mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <span className="text-[#0D1117] font-medium">{city.name}</span>
+                <span className="text-background-dark font-medium">{city.name}</span>
               </div>
             ))}
           </div>

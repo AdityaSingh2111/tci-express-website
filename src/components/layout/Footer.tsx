@@ -1,6 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
-import { companyInfo } from '@/data/company';
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
+import { mediaConfig } from '@/config/media';
+import { brandingConfig } from '@/config/branding';
+import Image from 'next/image';
 import { navigationConfig } from '@/data/navigation';
 
 /**
@@ -26,34 +30,66 @@ export function Footer() {
 
           {/* ── Brand column (spans 1 on lg for balance) ── */}
           <div className="lg:col-span-1">
+            {/* Desktop Footer Logo */}
             <Link
               href="/"
               className={
-                'inline-block font-bold text-xl text-white tracking-[-0.02em] mb-3 ' +
+                'hidden md:inline-block font-bold text-xl text-white tracking-[-0.02em] mb-3 ' +
                 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white rounded-sm'
               }
             >
-              {companyInfo.brandName}
+              <Image
+                src={mediaConfig.logoFooter}
+                alt={companyConfig.brandName}
+                width={brandingConfig.logoSizes.footerDesktop.width}
+                height={brandingConfig.logoSizes.footerDesktop.height}
+                style={{
+                  width: brandingConfig.logoSizes.footerDesktop.width,
+                  height: brandingConfig.logoSizes.footerDesktop.height,
+                }}
+                className="object-contain opacity-90"
+              />
+            </Link>
+
+            {/* Mobile Footer Logo */}
+            <Link
+              href="/"
+              className={
+                'inline-block md:hidden font-bold text-xl text-white tracking-[-0.02em] mb-3 ' +
+                'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white rounded-sm'
+              }
+            >
+              <Image
+                src={mediaConfig.logoFooter}
+                alt={companyConfig.brandName}
+                width={brandingConfig.logoSizes.footerMobile.width}
+                height={brandingConfig.logoSizes.footerMobile.height}
+                style={{
+                  width: brandingConfig.logoSizes.footerMobile.width,
+                  height: brandingConfig.logoSizes.footerMobile.height,
+                }}
+                className="object-contain opacity-90"
+              />
             </Link>
             <p className="text-sm text-white/70 leading-relaxed mb-4">
-              {companyInfo.tagline}
+              {companyConfig.tagline}
             </p>
             <address className="not-italic text-sm text-white/60 leading-relaxed space-y-1">
-              <p>{companyInfo.address}</p>
+              <p>{companyConfig.headOfficeAddress}</p>
               <p>
                 <a
-                  href={`tel:${companyInfo.phone}`}
+                  href={`tel:${contactConfig.phone}`}
                   className="hover:text-white transition-colors duration-[150ms] focus-visible:outline-white"
                 >
-                  {companyInfo.phone}
+                  {contactConfig.phone}
                 </a>
               </p>
               <p>
                 <a
-                  href={`mailto:${companyInfo.email}`}
+                  href={`mailto:${contactConfig.supportEmail}`}
                   className="hover:text-white transition-colors duration-[150ms] focus-visible:outline-white"
                 >
-                  {companyInfo.email}
+                  {contactConfig.supportEmail}
                 </a>
               </p>
             </address>
@@ -93,7 +129,7 @@ export function Footer() {
         <div className="w-full max-w-[1216px] mx-auto px-4 sm:px-6 lg:px-8 py-5">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-xs text-white/60 text-center sm:text-left">
-              &copy; {year} {companyInfo.legalName}. All rights reserved.
+              &copy; {year} {companyConfig.legalName}. All rights reserved.
               {' '}GST Registered Business.
             </p>
 
@@ -101,7 +137,7 @@ export function Footer() {
             <div className="hidden sm:flex items-center gap-4">
               {/* WhatsApp */}
               <a
-                href={`https://wa.me/${companyInfo.whatsapp.replace(/\D/g, '')}`}
+                href={`https://wa.me/${contactConfig.whatsapp.replace(/\D/g, '')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Contact us on WhatsApp"
@@ -118,7 +154,7 @@ export function Footer() {
 
               {/* Phone */}
               <a
-                href={`tel:${companyInfo.phone}`}
+                href={`tel:${contactConfig.phone}`}
                 aria-label="Call us"
                 className={
                   'text-white/60 hover:text-white ' +

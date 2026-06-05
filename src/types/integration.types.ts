@@ -1,1 +1,1 @@
-export interface Placeholder {}
+export type Placeholder = Record<string, never>;

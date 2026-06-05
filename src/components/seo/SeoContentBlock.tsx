@@ -1,6 +1,7 @@
 import React from 'react';
 import { SectionContainer } from '../shared/SectionContainer';
-import { companyInfo } from '@/data/company';
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
 
 /**
  * SeoContentBlock
@@ -11,7 +12,7 @@ import { companyInfo } from '@/data/company';
  */
 export function SeoContentBlock() {
   return (
-    <SectionContainer className="bg-white border-t border-[#E5E7EB]">
+    <SectionContainer className="bg-[#F9FAFB]">
       <div className="max-w-4xl mx-auto px-4">
         <h2 className="text-xl md:text-2xl font-bold text-[#000000] mb-6 text-center md:text-left leading-tight">
           Reliable Packers and Movers &amp; Comprehensive Logistics Solutions
@@ -19,7 +20,7 @@ export function SeoContentBlock() {
         <div className="prose prose-sm md:prose-base prose-gray max-w-none text-[#4B5563] text-justify space-y-4">
           <p>
             When it comes to seamless relocations, choosing the right partner is critical. 
-            <strong> {companyInfo.brandName}</strong> stands out as India&apos;s premier choice for dependable 
+            <strong> {companyConfig.brandName}</strong> stands out as India&apos;s premier choice for dependable 
             <strong className="text-[#000000] font-semibold"> packers and movers</strong>. We specialize in 
             <strong className="text-[#000000] font-semibold"> household shifting</strong>, ensuring your personal belongings are 
             packed with industrial-grade materials and transported safely. For businesses, our expert 

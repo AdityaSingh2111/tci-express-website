@@ -62,9 +62,9 @@ export function ServicesOverview() {
           href="/services"
           className={
             'inline-flex items-center gap-1.5 shrink-0 ' +
-            'text-sm font-medium text-[#0052CC] ' +
+            'text-sm font-medium text-brand-blue ' +
             'transition-opacity duration-[150ms] hover:opacity-80 ' +
-            'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0052CC] rounded-sm'
+            'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue rounded-sm'
           }
         >
           Explore All Services

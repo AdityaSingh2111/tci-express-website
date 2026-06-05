@@ -2,8 +2,9 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { blogData } from '@/data/blog';
-import { companyInfo } from '@/data/company';
-import { seoConfig } from '@/data/seo';
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
+import { seoConfig } from '@/config/seo';
 import { SectionContainer } from '@/components/shared/SectionContainer';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { PrimaryButton } from '@/components/shared/PrimaryButton';
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { title: 'Post Not Found' };
   }
 
-  const title = `${post.title} | ${companyInfo.brandName} Blog`;
+  const title = `${post.title} | ${companyConfig.brandName} Blog`;
   
   return {
     title,
@@ -44,7 +45,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `${seoConfig.siteUrl}/blog/${post.slug}`,
       type: 'article',
       publishedTime: post.publishedAt,
-      siteName: companyInfo.brandName,
+      siteName: companyConfig.brandName,
     },
     twitter: {
       card: 'summary_large_image',
@@ -83,7 +84,7 @@ export default async function BlogPostPage({ params }: Props) {
               "datePublished": post.publishedAt,
               "author": {
                 "@type": "Organization",
-                "name": companyInfo.brandName
+                "name": companyConfig.brandName
               }
             },
             {
@@ -116,15 +117,15 @@ export default async function BlogPostPage({ params }: Props) {
       
       <SectionContainer className="bg-[#F9FAFB] pt-24 pb-12 border-b border-[#E5E7EB]">
         <div className="max-w-3xl mx-auto">
-          <Link href="/blog" className="inline-flex items-center text-sm font-semibold text-[#0052CC] hover:underline mb-6">
+          <Link href="/blog" className="inline-flex items-center text-sm font-semibold text-brand-blue hover:underline mb-6">
             &larr; Back to all articles
           </Link>
           <div className="flex items-center gap-3 text-sm font-medium text-[#6B7280] mb-4">
-            <span className="text-[#0052CC] bg-[#0052CC]/10 px-2.5 py-0.5 rounded-full">{post.category}</span>
+            <span className="text-brand-blue bg-brand-blue/10 px-2.5 py-0.5 rounded-full">{post.category}</span>
             <span>•</span>
             <time dateTime={post.publishedAt}>{formattedDate}</time>
           </div>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#0D1117] leading-[1.1] mb-6 tracking-tight">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-background-dark leading-[1.1] mb-6 tracking-tight">
             {post.title}
           </h1>
           <p className="text-xl text-[#4B5563] leading-relaxed mb-8">
@@ -164,7 +165,7 @@ export default async function BlogPostPage({ params }: Props) {
           </p>
 
           <blockquote>
-            "A successful relocation is 80% planning and 20% execution. Always prioritize secure packing."
+            &quot;A successful relocation is 80% planning and 20% execution. Always prioritize secure packing.&quot;
           </blockquote>
 
           <h2>Conclusion</h2>
@@ -175,7 +176,7 @@ export default async function BlogPostPage({ params }: Props) {
         </article>
         
         {/* CTA Banner at bottom of article */}
-        <div className="max-w-3xl mx-auto mt-16 bg-[#00102A] rounded-2xl p-8 sm:p-10 text-center flex flex-col items-center">
+        <div className="max-w-3xl mx-auto mt-16 bg-brand-navy rounded-2xl p-8 sm:p-10 text-center flex flex-col items-center">
            <h3 className="text-2xl font-bold text-white mb-3">Ready for a seamless experience?</h3>
            <p className="text-white/70 mb-8 max-w-lg">
              Our expert team handles everything from packing to delivery. Get a free, transparent estimate today.

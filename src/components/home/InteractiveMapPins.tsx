@@ -55,7 +55,7 @@ export function InteractiveMapPins() {
               onClick={() => setActiveCity(isActive ? null : branch.city)}
               onFocus={() => setActiveCity(branch.city)}
               onBlur={() => setActiveCity(null)}
-              className={`w-5 h-5 flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0052CC] rounded-full ${isActive ? 'text-[#E53E3E] drop-shadow-[0_0_8px_rgba(229,62,62,0.6)]' : 'text-[#0052CC] drop-shadow-sm hover:text-[#E53E3E]'}`}
+              className={`w-5 h-5 flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-blue rounded-full ${isActive ? 'text-brand-red drop-shadow-[0_0_8px_rgba(229,62,62,0.6)]' : 'text-brand-blue drop-shadow-sm hover:text-brand-red'}`}
               aria-label={`Branch in ${branch.city}`}
               aria-expanded={isActive}
             >

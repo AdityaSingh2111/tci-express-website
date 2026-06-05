@@ -19,7 +19,7 @@ export function FaqPreview() {
   const displayFaqs = faqData.slice(0, 4);
 
   return (
-    <SectionContainer className="bg-[#F9FAFB] border-t border-[#E5E7EB]">
+    <SectionContainer className="bg-white border-t border-[#E5E7EB]">
       <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
         {/* Left Col: Header and CTA */}
         <div className="lg:col-span-5 lg:sticky lg:top-32">

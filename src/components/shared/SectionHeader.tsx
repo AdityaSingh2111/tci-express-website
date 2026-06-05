@@ -26,9 +26,15 @@ export function SectionHeader({
   eyebrow,
 }: SectionHeaderProps) {
   const alignClass    = alignment === 'center' ? 'text-center mx-auto' : 'text-left';
-  const titleColor    = theme === 'dark' ? 'text-white' : 'text-[#0D1117]';
+  const titleColor    = theme === 'dark' ? 'text-white' : 'text-background-dark';
   const subtitleColor = theme === 'dark' ? 'text-white/60' : 'text-[#6B7280]';
-  const eyebrowColor  = theme === 'dark' ? 'text-[#60A5FA]' : 'text-[#0052CC]';
+  const eyebrowColor  = theme === 'dark' ? 'text-[#60A5FA]' : 'text-brand-blue';
+
+  const getHeadingStyles = () => {
+    if (Heading === 'h1') return "text-[2.25rem] lg:text-[3rem] font-extrabold tracking-tight";
+    if (Heading === 'h2') return "text-[1.75rem] lg:text-[2.25rem] font-bold tracking-tight";
+    return "text-[1.25rem] lg:text-[1.5rem] font-bold tracking-tight";
+  };
 
   return (
     <div className={`mb-10 max-w-2xl ${alignClass}`}>
@@ -38,7 +44,7 @@ export function SectionHeader({
         </p>
       )}
       <Heading
-        className={`text-2xl sm:text-[1.875rem] font-bold tracking-[-0.025em] leading-[1.2] mb-3 ${titleColor}`}
+        className={`${getHeadingStyles()} leading-[1.2] mb-3 ${titleColor}`}
       >
         {title}
       </Heading>

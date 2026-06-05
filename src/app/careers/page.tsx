@@ -1,17 +1,18 @@
 import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { companyInfo } from "@/data/company";
-import { seoConfig } from "@/data/seo";
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
+import { seoConfig } from '@/config/seo';
 import { careersData } from "@/data/careers";
 import { SectionContainer } from "@/components/shared/SectionContainer";
 import { SectionHeader } from "@/components/shared/SectionHeader";
 
 export const metadata: Metadata = {
-  title: `Careers | ${companyInfo.brandName}`,
-  description: `Join ${companyInfo.brandName} and build a career in the logistics and relocation industry. View our open positions.`,
+  title: `Careers | ${companyConfig.brandName}`,
+  description: `Join ${companyConfig.brandName} and build a career in the logistics and relocation industry. View our open positions.`,
   openGraph: {
-    title: `Careers | ${companyInfo.brandName}`,
+    title: `Careers | ${companyConfig.brandName}`,
     url: `${seoConfig.siteUrl}/careers`,
   },
 };
@@ -28,7 +29,7 @@ export default function CareersPage() {
 
   return (
     <main>
-      <SectionContainer className="bg-[#00102A] pt-32 pb-24 text-center">
+      <SectionContainer className="bg-brand-navy pt-32 pb-24 text-center">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight">
             Build the Future of Logistics
@@ -50,7 +51,7 @@ export default function CareersPage() {
           <div className="mt-12 space-y-12">
             {departments.map(dept => (
               <div key={dept}>
-                <h2 className="text-2xl font-bold text-[#0D1117] mb-6 pb-2 border-b border-[#E5E7EB]">
+                <h2 className="text-2xl font-bold text-background-dark mb-6 pb-2 border-b border-[#E5E7EB]">
                   {dept}
                 </h2>
                 <div className="grid md:grid-cols-2 gap-4">
@@ -58,9 +59,9 @@ export default function CareersPage() {
                     <Link 
                       key={job.slug} 
                       href={`/careers/${job.slug}`}
-                      className="group block bg-white border border-[#E5E7EB] rounded-xl p-6 hover:shadow-md hover:border-[#0052CC] transition-all"
+                      className="group block bg-white border border-[#E5E7EB] rounded-xl p-6 hover:shadow-md hover:border-brand-blue transition-all"
                     >
-                      <h3 className="text-xl font-bold text-[#0D1117] mb-2 group-hover:text-[#0052CC] transition-colors">
+                      <h3 className="text-xl font-bold text-background-dark mb-2 group-hover:text-brand-blue transition-colors">
                         {job.title}
                       </h3>
                       <div className="flex flex-wrap items-center gap-4 text-sm text-[#4B5563]">
@@ -78,7 +79,7 @@ export default function CareersPage() {
                           {job.type}
                         </span>
                       </div>
-                      <div className="mt-6 flex items-center text-sm font-bold text-[#0052CC]">
+                      <div className="mt-6 flex items-center text-sm font-bold text-brand-blue">
                         View Details
                         <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />

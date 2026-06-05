@@ -1,17 +1,18 @@
 import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { companyInfo } from "@/data/company";
-import { seoConfig } from "@/data/seo";
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
+import { seoConfig } from '@/config/seo';
 import { blogData } from "@/data/blog";
 import { SectionContainer } from "@/components/shared/SectionContainer";
 import { SectionHeader } from "@/components/shared/SectionHeader";
 
 export const metadata: Metadata = {
-  title: `Logistics Blog & Insights | ${companyInfo.brandName}`,
-  description: `Read the latest insights, logistics tips, and moving guides from ${companyInfo.brandName}.`,
+  title: `Logistics Blog & Insights | ${companyConfig.brandName}`,
+  description: `Read the latest insights, logistics tips, and moving guides from ${companyConfig.brandName}.`,
   openGraph: {
-    title: `Blog | ${companyInfo.brandName}`,
+    title: `Blog | ${companyConfig.brandName}`,
     url: `${seoConfig.siteUrl}/blog`,
   },
 };
@@ -48,7 +49,7 @@ export default function BlogPage() {
                   {/* Content */}
                   <div className="p-6 flex flex-col flex-1">
                     <div className="flex items-center gap-3 mb-4">
-                      <span className="text-[11px] font-bold text-[#0052CC] bg-[#EEF4FF] px-2.5 py-1 rounded-full uppercase tracking-wider">
+                      <span className="text-[11px] font-bold text-brand-blue bg-[#EEF4FF] px-2.5 py-1 rounded-full uppercase tracking-wider">
                         {post.category}
                       </span>
                       <time className="text-[13px] font-medium text-[#6B7280]">
@@ -56,8 +57,8 @@ export default function BlogPage() {
                       </time>
                     </div>
                     
-                    <Link href={`/blog/${post.slug}`} className="block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0052CC] rounded-sm">
-                      <h2 className="text-xl font-bold text-[#0D1117] mb-3 leading-tight group-hover:text-[#0052CC] transition-colors">
+                    <Link href={`/blog/${post.slug}`} className="block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue rounded-sm">
+                      <h2 className="text-xl font-bold text-background-dark mb-3 leading-tight group-hover:text-brand-blue transition-colors">
                         {post.title}
                       </h2>
                     </Link>
@@ -69,7 +70,7 @@ export default function BlogPage() {
                     <div className="mt-auto pt-4 border-t border-[#F3F4F6]">
                       <Link 
                         href={`/blog/${post.slug}`}
-                        className="inline-flex items-center text-sm font-bold text-[#0052CC] hover:text-[#0047B3] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0052CC] rounded-sm"
+                        className="inline-flex items-center text-sm font-bold text-brand-blue hover:text-[#0047B3] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue rounded-sm"
                       >
                         Read Article 
                         <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

@@ -37,7 +37,7 @@ export function FAQItem({ faq }: FAQItemProps) {
         aria-controls={panelId}
         className={
           'flex w-full items-start justify-between gap-4 py-4 px-0 text-left ' +
-          'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0052CC] ' +
+          'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ' +
           'rounded-sm'
         }
       >
@@ -48,7 +48,7 @@ export function FAQItem({ faq }: FAQItemProps) {
         <span
           className={
             'shrink-0 w-5 h-5 flex items-center justify-center ' +
-            'text-[#0052CC] text-xl font-light leading-none select-none ' +
+            'text-brand-blue text-xl font-light leading-none select-none ' +
             'transition-transform duration-[200ms] ease-out ' +
             (isOpen ? 'rotate-45' : 'rotate-0')
           }

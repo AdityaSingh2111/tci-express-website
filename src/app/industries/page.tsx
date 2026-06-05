@@ -1,7 +1,8 @@
 import React from "react";
 import type { Metadata } from "next";
-import { companyInfo } from "@/data/company";
-import { seoConfig } from "@/data/seo";
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
+import { seoConfig } from '@/config/seo';
 import { industriesData } from "@/data/industries";
 import { SectionContainer } from "@/components/shared/SectionContainer";
 import { SectionHeader } from "@/components/shared/SectionHeader";
@@ -9,11 +10,11 @@ import { IndustryCard } from "@/components/shared/IndustryCard";
 import { CTAButton } from "@/components/shared/CTAButton";
 
 export const metadata: Metadata = {
-  title: `Industries We Serve | ${companyInfo.brandName}`,
-  description: `Discover how ${companyInfo.brandName} provides specialised logistics and relocation solutions for households, corporate offices, and commercial sectors.`,
+  title: `Industries We Serve | ${companyConfig.brandName}`,
+  description: `Discover how ${companyConfig.brandName} provides specialised logistics and relocation solutions for households, corporate offices, and commercial sectors.`,
   openGraph: {
-    title: `Industries We Serve | ${companyInfo.brandName}`,
-    description: `Discover how ${companyInfo.brandName} provides specialised logistics and relocation solutions for households, corporate offices, and commercial sectors.`,
+    title: `Industries We Serve | ${companyConfig.brandName}`,
+    description: `Discover how ${companyConfig.brandName} provides specialised logistics and relocation solutions for households, corporate offices, and commercial sectors.`,
     url: `${seoConfig.siteUrl}/industries`,
   },
 };

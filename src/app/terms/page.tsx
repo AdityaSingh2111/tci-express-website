@@ -1,15 +1,16 @@
 import React from "react";
 import type { Metadata } from "next";
-import { companyInfo } from "@/data/company";
-import { seoConfig } from "@/data/seo";
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
+import { seoConfig } from '@/config/seo';
 import { SectionContainer } from "@/components/shared/SectionContainer";
 import { SectionHeader } from "@/components/shared/SectionHeader";
 
 export const metadata: Metadata = {
-  title: `Terms of Service | ${companyInfo.brandName}`,
-  description: `Terms of Service for ${companyInfo.brandName}.`,
+  title: `Terms of Service | ${companyConfig.brandName}`,
+  description: `Terms of Service for ${companyConfig.brandName}.`,
   openGraph: {
-    title: `Terms of Service | ${companyInfo.brandName}`,
+    title: `Terms of Service | ${companyConfig.brandName}`,
     url: `${seoConfig.siteUrl}/terms`,
   },
 };

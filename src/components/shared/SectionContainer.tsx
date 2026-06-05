@@ -6,6 +6,8 @@ interface SectionContainerProps {
   className?: string;
   /** HTML id attribute for anchor linking */
   id?: string;
+  /** Container width standard */
+  width?: 'narrow' | 'default' | 'wide';
   /** Render as a plain <div> instead of <section> */
   as?: 'section' | 'div';
 }
@@ -20,14 +22,22 @@ export function SectionContainer({
   children,
   className = '',
   id,
+  width = 'default',
   as: Tag = 'section',
 }: SectionContainerProps) {
+  
+  const widthClasses = {
+    narrow: 'max-w-[768px]',
+    default: 'max-w-[1280px]',
+    wide: 'max-w-[1440px]'
+  };
+
   return (
     <Tag
       id={id}
-      className={`w-full py-10 md:py-12 lg:py-16 ${className}`}
+      className={`w-full py-14 lg:py-20 ${className}`}
     >
-      <div className="w-full max-w-[1216px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className={`w-full mx-auto px-4 sm:px-6 lg:px-8 ${widthClasses[width]}`}>
         {children}
       </div>
     </Tag>

@@ -1,7 +1,8 @@
 import React from "react";
 import type { Metadata } from "next";
-import { companyInfo } from "@/data/company";
-import { seoConfig } from "@/data/seo";
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
+import { seoConfig } from '@/config/seo';
 import { faqData } from "@/data/faq";
 import { SectionContainer } from "@/components/shared/SectionContainer";
 import { SectionHeader } from "@/components/shared/SectionHeader";
@@ -9,21 +10,21 @@ import { FAQItem } from "@/components/shared/FAQItem";
 import { CTAButton } from "@/components/shared/CTAButton";
 
 export const metadata: Metadata = {
-  title: `Frequently Asked Questions | ${companyInfo.brandName}`,
-  description: `Find answers to common questions about relocation, tracking, pricing, and our logistics services at ${companyInfo.brandName}.`,
+  title: `Frequently Asked Questions | ${companyConfig.brandName}`,
+  description: `Find answers to common questions about relocation, tracking, pricing, and our logistics services at ${companyConfig.brandName}.`,
   alternates: {
     canonical: `${seoConfig.siteUrl}/faq`,
   },
   openGraph: {
-    title: `Frequently Asked Questions | ${companyInfo.brandName}`,
-    description: `Find answers to common questions about relocation, tracking, pricing, and our logistics services at ${companyInfo.brandName}.`,
+    title: `Frequently Asked Questions | ${companyConfig.brandName}`,
+    description: `Find answers to common questions about relocation, tracking, pricing, and our logistics services at ${companyConfig.brandName}.`,
     url: `${seoConfig.siteUrl}/faq`,
-    siteName: companyInfo.brandName,
+    siteName: companyConfig.brandName,
   },
   twitter: {
     card: "summary_large_image",
-    title: `Frequently Asked Questions | ${companyInfo.brandName}`,
-    description: `Find answers to common questions about relocation, tracking, pricing, and our logistics services at ${companyInfo.brandName}.`,
+    title: `Frequently Asked Questions | ${companyConfig.brandName}`,
+    description: `Find answers to common questions about relocation, tracking, pricing, and our logistics services at ${companyConfig.brandName}.`,
   }
 };
 

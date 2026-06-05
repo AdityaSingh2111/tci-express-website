@@ -1,26 +1,27 @@
 import React from "react";
 import type { Metadata } from "next";
-import { companyInfo } from "@/data/company";
-import { seoConfig } from "@/data/seo";
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
+import { seoConfig } from '@/config/seo';
 import { SectionContainer } from "@/components/shared/SectionContainer";
 import { SectionHeader } from "@/components/shared/SectionHeader";
 import { CTAButton } from "@/components/shared/CTAButton";
 
 export const metadata: Metadata = {
-  title: `Gallery | ${companyInfo.brandName}`,
+  title: `Gallery | ${companyConfig.brandName}`,
   description: `View our fleet, premium packing materials, and professional teams in action delivering logistics excellence across India.`,
   alternates: {
     canonical: `${seoConfig.siteUrl}/gallery`,
   },
   openGraph: {
-    title: `Gallery | ${companyInfo.brandName}`,
+    title: `Gallery | ${companyConfig.brandName}`,
     description: `View our fleet, premium packing materials, and professional teams in action delivering logistics excellence across India.`,
     url: `${seoConfig.siteUrl}/gallery`,
-    siteName: companyInfo.brandName,
+    siteName: companyConfig.brandName,
   },
   twitter: {
     card: "summary_large_image",
-    title: `Gallery | ${companyInfo.brandName}`,
+    title: `Gallery | ${companyConfig.brandName}`,
     description: `View our fleet, premium packing materials, and professional teams in action delivering logistics excellence across India.`,
   }
 };
@@ -55,7 +56,7 @@ export default function GalleryPage() {
               key={filter}
               className={`px-5 py-2 rounded-full text-sm font-medium transition-colors ${
                 index === 0
-                  ? "bg-[#0052CC] text-white"
+                  ? "bg-brand-blue text-white"
                   : "bg-[#F3F4F6] text-[#4B5563] hover:bg-[#E5E7EB]"
               }`}
               type="button"

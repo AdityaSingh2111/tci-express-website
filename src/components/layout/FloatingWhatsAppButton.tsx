@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { companyInfo } from '@/data/company';
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
 
 /**
  * FloatingWhatsAppButton
@@ -21,7 +22,7 @@ export function FloatingWhatsAppButton() {
     return () => clearTimeout(t);
   }, []);
 
-  const whatsappNumber = companyInfo.whatsapp.replace(/\D/g, '');
+  const whatsappNumber = contactConfig.whatsapp.replace(/\D/g, '');
   const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hi, I need help with a relocation.')}`;
 
   return (

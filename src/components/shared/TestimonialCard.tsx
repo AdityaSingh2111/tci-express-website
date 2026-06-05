@@ -35,10 +35,9 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
   return (
     <article
       className={
-        'bg-white rounded-[8px] border border-[#E5E7EB] p-6 ' +
-        'flex flex-col h-full ' +
-        'transition-[border-color,box-shadow] duration-[150ms] ease-out ' +
-        'hover:border-[#D1D5DB] hover:[box-shadow:0_1px_3px_rgba(0,0,0,0.05)]'
+        'bg-white border border-[#E5E7EB] rounded-[12px] p-5 md:p-6 flex flex-col h-full ' +
+        'transition-all duration-200 ease-out hover:-translate-y-[2px] ' +
+        'hover:border-[#D1D5DB] hover:shadow-md'
       }
     >
       {/* Star rating */}
@@ -71,7 +70,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
           className="w-9 h-9 rounded-full bg-[#EFF6FF] flex items-center justify-center shrink-0"
           aria-hidden="true"
         >
-          <span className="text-[#0052CC] text-xs font-bold">{initials}</span>
+          <span className="text-brand-blue text-xs font-bold">{initials}</span>
         </div>
         <div>
           <div className="text-sm font-semibold text-[#000000] leading-tight">

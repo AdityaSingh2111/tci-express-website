@@ -24,8 +24,9 @@ import { FinalCta }              from '@/components/home/FinalCta';
  * 05-homepage-content-blueprint.md section order.
  */
 import type { Metadata } from "next";
-import { companyInfo } from "@/data/company";
-import { seoConfig } from "@/data/seo";
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
+import { seoConfig } from '@/config/seo';
 
 export const metadata: Metadata = {
   title: seoConfig.defaultTitle,
@@ -37,7 +38,7 @@ export const metadata: Metadata = {
     title: seoConfig.defaultTitle,
     description: seoConfig.defaultDescription,
     url: seoConfig.siteUrl,
-    siteName: companyInfo.brandName,
+    siteName: companyConfig.brandName,
     type: "website",
   },
   twitter: {
@@ -55,11 +56,11 @@ export default function Home() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "MovingCompany",
-            name: companyInfo.brandName,
-            image: `${seoConfig.siteUrl}${seoConfig.ogImage}`,
+            name: companyConfig.brandName,
+            image: `${seoConfig.siteUrl}/logos/logo-master.svg`,
             "@id": seoConfig.siteUrl,
             url: seoConfig.siteUrl,
-            telephone: companyInfo.phone,
+            telephone: contactConfig.phone,
             address: {
               "@type": "PostalAddress",
               streetAddress: "TCI House, 69 Institutional Area, Sector 32",

@@ -49,8 +49,8 @@ export function ScrollToTopButton() {
         /* Mobile: 44x44, bottom 80px (above 56px bottom nav + 24px gap), right 16px */
         w-[44px] h-[44px] bottom-[80px] right-4
         
-        /* Desktop (md+): 44x44, bottom 100px, right 31px (offset from WhatsApp) */
-        md:w-[44px] md:h-[44px] md:bottom-[100px] md:right-[31px]
+        /* Desktop (md+): 44x44, bottom 104px (above WhatsApp), right 31px (offset from WhatsApp) */
+        md:w-[44px] md:h-[44px] md:bottom-[104px] md:right-[31px]
 
         ${isVisible ? 'opacity-100 visible translate-y-0 hover:-translate-y-[2px] hover:shadow-lg hover:bg-[#1E40AF]' : 'opacity-0 invisible translate-y-[10px]'}
       `}

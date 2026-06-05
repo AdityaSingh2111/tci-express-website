@@ -15,7 +15,7 @@ import { citiesData } from '@/data/cities';
  */
 export function ServiceCitiesSeoBlock() {
   return (
-    <SectionContainer className="bg-white">
+    <SectionContainer className="bg-[#F9FAFB]">
       <SectionHeader
         title="Our Active Service Hubs"
         subtitle="Providing Seamless Logistics Across India's Top Cities"
@@ -31,9 +31,9 @@ export function ServiceCitiesSeoBlock() {
                 href={`/locations/${city.name.toLowerCase().replace(/\s+/g, '-')}`}
                 className={
                   'text-sm font-medium text-[#4B5563] ' +
-                  'hover:text-[#0052CC] ' +
+                  'hover:text-brand-blue ' +
                   'transition-colors duration-[150ms] ' +
-                  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0052CC] rounded-sm py-1 block'
+                  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue rounded-sm py-1 block'
                 }
               >
                 Packers &amp; Movers in {city.name}

@@ -3,8 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { servicesData } from "@/data/services";
-import { companyInfo } from "@/data/company";
-import { seoConfig } from "@/data/seo";
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
+import { seoConfig } from '@/config/seo';
 
 // ── Static params ─────────────────────────────────────────────────────────────
 export async function generateStaticParams() {
@@ -23,20 +24,20 @@ export async function generateMetadata({
   if (!service) return { title: "Service Not Found" };
 
   return {
-    title: `${service.title} | ${companyInfo.brandName}`,
+    title: `${service.title} | ${companyConfig.brandName}`,
     description: service.shortDescription,
     alternates: {
       canonical: `${seoConfig.siteUrl}/services/${service.slug}`,
     },
     openGraph: {
-      title: `${service.title} | ${companyInfo.brandName}`,
+      title: `${service.title} | ${companyConfig.brandName}`,
       description: service.shortDescription,
       url: `${seoConfig.siteUrl}/services/${service.slug}`,
-      siteName: companyInfo.brandName,
+      siteName: companyConfig.brandName,
     },
     twitter: {
       card: "summary_large_image",
-      title: `${service.title} | ${companyInfo.brandName}`,
+      title: `${service.title} | ${companyConfig.brandName}`,
       description: service.shortDescription,
     }
   };
@@ -126,7 +127,7 @@ export default async function ServiceDetailPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       {/* Hero */}
-      <section className="relative w-full bg-[#00102A] overflow-hidden pt-14 pb-12">
+      <section className="relative w-full bg-brand-navy overflow-hidden pt-14 pb-12">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full opacity-[0.06] pointer-events-none" style={{ background: "radial-gradient(circle, #0052CC 0%, transparent 70%)" }} aria-hidden="true" />
         <div className="relative w-full max-w-[1216px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 mb-4">
@@ -143,7 +144,7 @@ export default async function ServiceDetailPage({
           <div className="flex flex-wrap gap-3">
             <Link
               href="/quote"
-              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white bg-[#E53E3E] rounded-lg hover:bg-[#CC2A2A] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E53E3E]"
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white bg-brand-red rounded-lg hover:bg-[#CC2A2A] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-red"
             >
               Get a Free Quote
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg>
@@ -162,8 +163,8 @@ export default async function ServiceDetailPage({
       <section className="w-full py-10 md:py-14 bg-white">
         <div className="max-w-[1216px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#0052CC] mb-3">Overview</p>
-            <h2 className="text-xl sm:text-2xl font-bold text-[#0D1117] mb-4 tracking-[-0.02em]">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-brand-blue mb-3">Overview</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-background-dark mb-4 tracking-[-0.02em]">
               Why Choose Our {service.title} Service?
             </h2>
             <p className="text-base text-[#6B7280] leading-relaxed">
@@ -176,17 +177,17 @@ export default async function ServiceDetailPage({
       {/* Benefits */}
       <section className="w-full py-10 md:py-14 bg-[#F8FAFC]">
         <div className="max-w-[1216px] mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#0052CC] mb-3">Key benefits</p>
-          <h2 className="text-xl sm:text-2xl font-bold text-[#0D1117] mb-8 tracking-[-0.02em]">What You Get</h2>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-brand-blue mb-3">Key benefits</p>
+          <h2 className="text-xl sm:text-2xl font-bold text-background-dark mb-8 tracking-[-0.02em]">What You Get</h2>
           <div className="grid sm:grid-cols-3 gap-4">
             {benefits.map((b) => (
               <div key={b.title} className="bg-white p-5 rounded-xl border border-[#E5E7EB]">
                 <div className="w-9 h-9 rounded-lg bg-[#EEF4FF] flex items-center justify-center mb-4">
-                  <svg className="w-5 h-5 text-[#0052CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+                  <svg className="w-5 h-5 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" d={b.icon} />
                   </svg>
                 </div>
-                <h3 className="text-sm font-semibold text-[#0D1117] mb-1.5">{b.title}</h3>
+                <h3 className="text-sm font-semibold text-background-dark mb-1.5">{b.title}</h3>
                 <p className="text-xs text-[#6B7280] leading-relaxed">{b.desc}</p>
               </div>
             ))}
@@ -197,13 +198,13 @@ export default async function ServiceDetailPage({
       {/* Process */}
       <section className="w-full py-10 md:py-14 bg-white">
         <div className="max-w-[1216px] mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#0052CC] mb-3">How it works</p>
-          <h2 className="text-xl sm:text-2xl font-bold text-[#0D1117] mb-8 tracking-[-0.02em]">Our Process</h2>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-brand-blue mb-3">How it works</p>
+          <h2 className="text-xl sm:text-2xl font-bold text-background-dark mb-8 tracking-[-0.02em]">Our Process</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {steps.map((s) => (
               <div key={s.n} className="relative flex flex-col p-5 rounded-xl border border-[#E5E7EB]">
-                <span className="font-mono text-2xl font-bold text-[#0052CC]/20 mb-3">{s.n}</span>
-                <h3 className="text-sm font-semibold text-[#0D1117] mb-1.5">{s.title}</h3>
+                <span className="font-mono text-2xl font-bold text-brand-blue/20 mb-3">{s.n}</span>
+                <h3 className="text-sm font-semibold text-background-dark mb-1.5">{s.title}</h3>
                 <p className="text-xs text-[#6B7280] leading-relaxed">{s.desc}</p>
               </div>
             ))}
@@ -214,16 +215,16 @@ export default async function ServiceDetailPage({
       {/* FAQ */}
       <section className="w-full py-10 md:py-14 bg-[#F8FAFC]">
         <div className="max-w-[1216px] mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#0052CC] mb-3">Common questions</p>
-          <h2 className="text-xl sm:text-2xl font-bold text-[#0D1117] mb-6 tracking-[-0.02em]">Frequently Asked</h2>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-brand-blue mb-3">Common questions</p>
+          <h2 className="text-xl sm:text-2xl font-bold text-background-dark mb-6 tracking-[-0.02em]">Frequently Asked</h2>
           <div className="max-w-2xl space-y-3">
             {[
               { q: "How long does the process take?", a: "Timelines vary based on specific requirements. We provide a detailed schedule during the initial survey and consultation." },
               { q: "Is the service insured?", a: "Yes. Comprehensive transit insurance options are available to protect your goods against all unforeseen circumstances." },
-              { q: "Do you serve Pan-India?", a: `Yes. ${companyInfo.brandName} operates across all major cities and regions in India.` },
+              { q: "Do you serve Pan-India?", a: `Yes. ${companyConfig.brandName} operates across all major cities and regions in India.` },
             ].map((item) => (
               <div key={item.q} className="bg-white p-5 rounded-xl border border-[#E5E7EB]">
-                <h3 className="text-sm font-semibold text-[#0D1117] mb-2">{item.q}</h3>
+                <h3 className="text-sm font-semibold text-background-dark mb-2">{item.q}</h3>
                 <p className="text-sm text-[#6B7280] leading-relaxed">{item.a}</p>
               </div>
             ))}
@@ -232,7 +233,7 @@ export default async function ServiceDetailPage({
       </section>
 
       {/* CTA */}
-      <section className="w-full py-14 bg-[#0D1117]">
+      <section className="w-full py-14 bg-background-dark">
         <div className="max-w-[1216px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#60A5FA] mb-3">Get started</p>
           <h2 className="text-2xl sm:text-[1.875rem] font-bold text-white mb-4 tracking-[-0.025em]">
@@ -244,7 +245,7 @@ export default async function ServiceDetailPage({
           <div className="flex flex-col sm:flex-row justify-center gap-3">
             <Link
               href="/quote"
-              className="inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white bg-[#E53E3E] rounded-lg hover:bg-[#CC2A2A] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E53E3E]"
+              className="inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white bg-brand-red rounded-lg hover:bg-[#CC2A2A] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-red"
             >
               Request a Free Quote
             </Link>

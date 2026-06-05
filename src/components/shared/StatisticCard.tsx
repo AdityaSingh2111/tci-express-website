@@ -17,7 +17,7 @@ interface StatisticCardProps {
  * announce both together (aria-label on the wrapper).
  */
 export function StatisticCard({ stat, theme = 'light' }: StatisticCardProps) {
-  const valueColor = theme === 'dark' ? 'text-white' : 'text-[#0052CC]';
+  const valueColor = theme === 'dark' ? 'text-white' : 'text-brand-blue';
   const labelColor = theme === 'dark' ? 'text-gray-300' : 'text-[#4B5563]';
 
   return (

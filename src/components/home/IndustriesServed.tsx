@@ -16,7 +16,7 @@ import { industriesData } from '@/data/industries';
  */
 export function IndustriesServed() {
   return (
-    <SectionContainer className="bg-[#F8FAFC]">
+    <SectionContainer className="bg-[#F9FAFB]">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
         <div className="max-w-xl">
           <SectionHeader 
@@ -30,7 +30,7 @@ export function IndustriesServed() {
         <div className="shrink-0">
           <Link
             href="/industries"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#0052CC] hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0052CC] rounded-sm"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-blue hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue rounded-sm"
           >
             View all industries
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

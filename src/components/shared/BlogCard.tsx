@@ -50,17 +50,17 @@ export function BlogCard({ post }: BlogCardProps) {
       <div className="p-5">
         {/* Metadata row */}
         <div className="flex items-center gap-2 text-xs text-[#4B5563] mb-3">
-          <span className="font-medium text-[#0052CC]">{post.category}</span>
+          <span className="font-medium text-brand-blue">{post.category}</span>
           <span aria-hidden="true">·</span>
           <time dateTime={post.publishedAt}>{formattedDate}</time>
         </div>
 
         {/* Title — H3 per SEO hierarchy §7.1 */}
-        <h3 className="text-base font-semibold text-[#000000] leading-snug mb-2 group-hover:text-[#0052CC] transition-colors duration-[150ms]">
+        <h3 className="text-base font-semibold text-[#000000] leading-snug mb-2 group-hover:text-brand-blue transition-colors duration-[150ms]">
           <Link
             href={`/blog/${post.slug}`}
             aria-label={`Read article: ${post.title}`}
-            className="focus-visible:outline-2 focus-visible:outline-[#0052CC] rounded-sm"
+            className="focus-visible:outline-2 focus-visible:outline-brand-blue rounded-sm"
           >
             {/* Full-card overlay for clickability */}
             <span className="absolute inset-0" aria-hidden="true" />

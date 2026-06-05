@@ -23,12 +23,12 @@ export function PrimaryButton({
   ...props
 }: PrimaryButtonProps) {
   const base =
-    'inline-flex items-center justify-center min-h-[46px] px-6 py-2.5 ' +
-    'text-[15px] font-bold rounded-xl text-white bg-[#000000] shadow-sm ' +
+    'inline-flex items-center justify-center h-[44px] md:h-[48px] px-6 md:px-8 ' +
+    'text-[15px] font-bold rounded-[12px] text-white bg-[#000000] shadow-sm ' +
     'border border-transparent ' +
-    'transition-all duration-[200ms] ease-out hover:-translate-y-0.5 ' +
-    'hover:opacity-85 ' +
-    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0052CC] ' +
+    'transition-all duration-200 ease-out hover:-translate-y-[2px] whitespace-nowrap ' +
+    'hover:bg-[#1F2937] ' +
+    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ' +
     'disabled:opacity-50 disabled:cursor-not-allowed';
 
   if (href) {

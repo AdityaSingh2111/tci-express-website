@@ -18,10 +18,11 @@ export function PartnerLogoCard({ partner }: PartnerLogoCardProps) {
   return (
     <div
       className={
-        'group flex items-center justify-center p-5 ' +
-        'bg-white rounded-[8px] border border-[#E5E7EB] ' +
-        'transition-[border-color,box-shadow] duration-[150ms] ease-out ' +
-        'hover:border-[#D1D5DB] hover:[box-shadow:0_1px_3px_rgba(0,0,0,0.05)]'
+        'group flex flex-col items-center justify-center ' +
+        'bg-white border border-[#E5E7EB] rounded-[12px] ' +
+        'p-5 md:p-6 h-[120px] lg:h-[140px] ' +
+        'transition-all duration-200 ease-out hover:-translate-y-[2px] ' +
+        'hover:border-[#D1D5DB] hover:shadow-md'
       }
     >
       <div

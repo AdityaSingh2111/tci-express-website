@@ -1,6 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
-import { companyInfo } from '@/data/company';
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
+import { mediaConfig } from '@/config/media';
+import Image from 'next/image';
 
 /**
  * HeroSection — Mobile-first premium hero.
@@ -18,7 +21,7 @@ import { companyInfo } from '@/data/company';
 export function HeroSection() {
   return (
     <section
-      className="relative w-full bg-[#00102A] overflow-hidden"
+      className="relative w-full bg-brand-navy overflow-hidden"
       aria-labelledby="hero-heading"
     >
       {/* Background orbs — desktop only */}
@@ -33,14 +36,14 @@ export function HeroSection() {
         aria-hidden="true"
       />
 
-      <div className="relative w-full max-w-[1216px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-8 lg:pt-14 lg:pb-12 xl:pt-16 xl:pb-14">
-        <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-6 lg:gap-8 items-center">
+      <div className="relative w-full max-w-[1216px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12 lg:pt-8 lg:pb-16 xl:pt-10 xl:pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-5 lg:gap-8 items-center">
 
           {/* ── Content column ────────────────────────────────────────────── */}
           <div className="flex flex-col items-start">
 
             {/* Eyebrow */}
-            <div className="inline-flex items-center gap-2 mb-4">
+            <div className="inline-flex items-center gap-2 mb-3">
               <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E] shrink-0" aria-hidden="true" />
               <span className="text-[10px] sm:text-[11px] font-semibold text-[#22C55E] uppercase tracking-[0.12em]">
                 Pan-India Door-to-Door Logistics
@@ -50,7 +53,7 @@ export function HeroSection() {
             {/* H1 — smaller on mobile, larger on desktop */}
             <h1
               id="hero-heading"
-              className="text-[2rem] lg:text-[2.75rem] xl:text-[3.25rem] font-extrabold text-white leading-[1.1] tracking-[-0.03em] mb-4"
+              className="text-[2rem] lg:text-[2.75rem] xl:text-[3.25rem] font-extrabold text-white leading-[1.1] tracking-[-0.03em] mb-3"
             >
               Premium Logistics{' '}
               <span className="text-[#4B9EFF]">&amp; Relocation</span>
@@ -58,7 +61,7 @@ export function HeroSection() {
             </h1>
 
             {/* Subheadline */}
-            <p className="text-[15px] text-white/70 leading-relaxed mb-6 lg:mb-6 max-w-[480px]">
+            <p className="text-[15px] text-white/70 leading-relaxed mb-4 max-w-[480px]">
               Stress-free household shifting, vehicle transport, and commercial
               relocation — backed by shipment tracking, trained professionals,
               and transparent pricing.
@@ -66,7 +69,7 @@ export function HeroSection() {
 
             {/* Trust bullets — 2-column on mobile, wrap on larger */}
             <ul
-              className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4 mb-6 lg:mb-8"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4 mb-4 lg:mb-5"
               aria-label="Key features"
             >
               {[
@@ -92,9 +95,9 @@ export function HeroSection() {
                   'flex items-center justify-center gap-2',
                   'w-full sm:w-auto',
                   'px-6 py-3.5 sm:py-3',
-                  'text-[15px] font-bold text-white bg-[#0052CC] rounded-xl',
+                  'text-[15px] font-bold text-white bg-brand-blue rounded-xl',
                   'hover:bg-[#0047B3] transition-all duration-200',
-                  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0052CC]',
+                  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue',
                   'shadow-lg hover:shadow-xl hover:-translate-y-0.5',
                   'touch-manipulation',
                 ].join(' ')}
@@ -126,27 +129,27 @@ export function HeroSection() {
             </div>
 
             {/* Trust footer line */}
-            <p className="mt-5 text-[11px] text-white/60 font-medium">
+            <p className="mt-4 text-[11px] text-white/60 font-medium">
               Trusted for Pan-India relocations · GST Registered Business
             </p>
           </div>
 
           {/* ── Visual column — desktop only ─────────────────────────────── */}
           <div className="relative hidden lg:flex flex-col items-end overflow-hidden">
-            {/* Placeholder card (replace with real image) */}
-            <div className="relative w-full max-w-[480px] aspect-[4/3] rounded-2xl overflow-hidden bg-white/5 border border-white/8 flex items-center justify-center">
-              <div className="text-center p-6">
-                <svg className="w-12 h-12 mx-auto text-white/60 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1} aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                </svg>
-                <p className="text-white/60 text-xs">Hero image placeholder</p>
-                <p className="text-white/60 text-[10px] mt-1">Replace with premium logistics photography</p>
-              </div>
+            <div className="relative w-full max-w-[480px] aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+              <Image 
+                src={mediaConfig.heroImages[0]} 
+                alt={`${companyConfig.brandName} relocation fleet`} 
+                fill 
+                sizes="(max-width: 1024px) 100vw, 480px"
+                className="object-cover"
+                priority
+              />
             </div>
 
             {/* Floating stat — bottom left */}
             <div className="absolute left-0 bottom-10 bg-white rounded-xl px-4 py-3 shadow-xl border border-[#E5E7EB]">
-              <p className="font-mono text-xl font-extrabold text-[#0052CC] leading-none">24/7</p>
+              <p className="font-mono text-xl font-extrabold text-brand-blue leading-none">24/7</p>
               <p className="text-[11px] text-[#6B7280] font-medium mt-0.5">Support Available</p>
             </div>
 

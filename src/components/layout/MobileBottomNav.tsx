@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { companyInfo } from '@/data/company';
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
 
 /**
  * MobileBottomNav
@@ -19,14 +20,14 @@ import { companyInfo } from '@/data/company';
  * All touch targets ≥ 44px (§29).
  */
 export function MobileBottomNav() {
-  const whatsappNumber = companyInfo.whatsapp.replace(/\D/g, '');
+  const whatsappNumber = contactConfig.whatsapp.replace(/\D/g, '');
   const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hi, I need help with a relocation.')}`;
 
   const baseItem =
     'flex flex-col items-center justify-center flex-1 min-h-[56px] gap-0.5 ' +
     'text-[#4B5563] ' +
     'transition-colors duration-[150ms] ease-out ' +
-    'focus-visible:outline-2 focus-visible:outline-[#0052CC] focus-visible:outline-offset-[-2px] ' +
+    'focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-[-2px] ' +
     'active:bg-[#F9FAFB]';
 
   return (
@@ -40,8 +41,8 @@ export function MobileBottomNav() {
 
         {/* ── Call Now ── */}
         <a
-          href={`tel:${companyInfo.phone}`}
-          className={`${baseItem} text-[#0052CC]`}
+          href={`tel:${contactConfig.phone}`}
+          className={`${baseItem} text-[#4B5563]`}
           aria-label="Call us now"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
@@ -73,7 +74,7 @@ export function MobileBottomNav() {
         {/* ── Get Quote (CTA — red) ── */}
         <Link
           href="/quote"
-          className={`${baseItem} text-[#E53E3E]`}
+          className={`${baseItem} text-brand-blue`}
           aria-label="Get a free quote"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">

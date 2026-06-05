@@ -1,15 +1,16 @@
 import React from "react";
 import type { Metadata } from "next";
-import { companyInfo } from "@/data/company";
-import { seoConfig } from "@/data/seo";
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
+import { seoConfig } from '@/config/seo';
 import { SectionContainer } from "@/components/shared/SectionContainer";
 import { SectionHeader } from "@/components/shared/SectionHeader";
 
 export const metadata: Metadata = {
-  title: `Privacy Policy | ${companyInfo.brandName}`,
-  description: `Privacy Policy for ${companyInfo.brandName}.`,
+  title: `Privacy Policy | ${companyConfig.brandName}`,
+  description: `Privacy Policy for ${companyConfig.brandName}.`,
   openGraph: {
-    title: `Privacy Policy | ${companyInfo.brandName}`,
+    title: `Privacy Policy | ${companyConfig.brandName}`,
     url: `${seoConfig.siteUrl}/privacy`,
   },
 };

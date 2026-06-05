@@ -16,7 +16,7 @@ import { blogData } from '@/data/blog';
  */
 export function BlogPreview() {
   return (
-    <SectionContainer className="bg-white border-t border-[#E5E7EB]">
+    <SectionContainer className="bg-[#F9FAFB] border-t border-[#E5E7EB]">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
         <div className="max-w-2xl">
           <SectionHeader 

@@ -24,12 +24,12 @@ export function CTAButton({
   ...props
 }: CTAButtonProps) {
   const base =
-    'inline-flex items-center justify-center min-h-[46px] px-7 py-2.5 ' +
-    'text-[15px] font-bold rounded-xl text-white shadow-md hover:shadow-lg hover:-translate-y-0.5 ' +
-    'bg-[#0052CC] border border-transparent ' +
-    'transition-opacity duration-[150ms] ease-out ' +
-    'hover:opacity-90 ' +
-    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E53E3E] ' +
+    'inline-flex items-center justify-center h-[44px] md:h-[48px] px-6 md:px-8 ' +
+    'text-[15px] font-bold rounded-[12px] text-white shadow-[0_4px_14px_0_rgba(0,82,204,0.39)] hover:shadow-[0_6px_20px_rgba(0,82,204,0.23)] hover:-translate-y-[2px] ' +
+    'bg-brand-blue border border-transparent ' +
+    'transition-all duration-200 ease-out whitespace-nowrap ' +
+    'hover:bg-[#0047B3] ' +
+    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ' +
     'disabled:opacity-50 disabled:cursor-not-allowed';
 
   if (href) {

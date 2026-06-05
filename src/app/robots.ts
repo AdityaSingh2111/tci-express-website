@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { seoConfig } from '@/data/seo';
+import { seoConfig } from '@/config/seo';
 
 export default function robots(): MetadataRoute.Robots {
   return {

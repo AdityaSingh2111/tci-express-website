@@ -23,7 +23,7 @@ export function Testimonials() {
     : testimonialsData.filter(t => t.category === activeCategory);
 
   return (
-    <SectionContainer className="bg-[#F9FAFB]">
+    <SectionContainer className="bg-white border-y border-[#E5E7EB]">
       <SectionHeader 
         title="What Our Customers Say" 
         subtitle="Real stories from families and businesses who trusted us with their relocation."
@@ -38,9 +38,9 @@ export function Testimonials() {
             key={category}
             onClick={() => setActiveCategory(category)}
             className={[
-              "px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0052CC] touch-manipulation",
+              "px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue touch-manipulation",
               activeCategory === category
-                ? "bg-[#0052CC] text-white shadow-md"
+                ? "bg-brand-blue text-white shadow-md"
                 : "bg-white text-[#4B5563] border border-[#E5E7EB] hover:border-[#D1D5DB] hover:bg-[#F3F4F6]"
             ].join(" ")}
           >

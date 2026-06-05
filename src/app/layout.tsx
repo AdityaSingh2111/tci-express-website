@@ -10,8 +10,11 @@ import { MobileBottomNav }       from "@/components/layout/MobileBottomNav";
 import { FloatingWhatsAppButton} from "@/components/layout/FloatingWhatsAppButton";
 import { ScrollToTopButton }     from "@/components/layout/ScrollToTopButton";
 
-import { seoConfig } from "@/data/seo";
-import { companyInfo } from "@/data/company";
+import { seoConfig } from "@/config/seo";
+import { companyConfig } from "@/config/company";
+import { contactConfig } from "@/config/contact";
+import { socialConfig } from "@/config/social";
+import { AnalyticsProviders } from "@/components/analytics/AnalyticsProviders";
 
 // ── Fonts ─────────────────────────────────────────────────────────────────────
 const inter = Inter({
@@ -28,38 +31,35 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 // ── Global Metadata ───────────────────────────────────────────────────────────
+// Note: openGraph.images and twitter.images are intentionally omitted here.
+// Next.js auto-generates them from src/app/opengraph-image.png (file-based metadata).
+// See: https://nextjs.org/docs/app/api-reference/file-conventions/metadata/opengraph-image
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    seoConfig.siteUrl.startsWith("http")
-      ? seoConfig.siteUrl
-      : "https://example.com"
-  ),
+  metadataBase: new URL(seoConfig.siteUrl),
   title: {
     default:  seoConfig.defaultTitle,
     template: seoConfig.titleTemplate,
   },
   description: seoConfig.defaultDescription,
   openGraph: {
-    type:        "website",
-    locale:      "en_IN",
-    siteName:    companyInfo.brandName,
+    type:        'website',
+    locale:      'en_IN',
+    siteName:    companyConfig.brandName,
     title:       seoConfig.defaultTitle,
     description: seoConfig.defaultDescription,
-    images:      [{ url: seoConfig.ogImage }],
+    // images: auto-provided by src/app/opengraph-image.png
   },
   twitter: {
-    card:        "summary_large_image",
+    card:        'summary_large_image',
+    site:        seoConfig.twitterHandle,
     title:       seoConfig.defaultTitle,
     description: seoConfig.defaultDescription,
-    images:      [seoConfig.ogImage],
+    // images: auto-provided by src/app/opengraph-image.png
   },
   robots: {
-    index:             true,
-    follow:            true,
-    googleBot: {
-      index:  true,
-      follow: true,
-    },
+    index:  true,
+    follow: true,
+    googleBot: { index: true, follow: true },
   },
 };
 
@@ -77,19 +77,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              name: companyInfo.brandName,
-              legalName: companyInfo.legalName,
+              name: companyConfig.brandName,
+              legalName: companyConfig.legalName,
               url: seoConfig.siteUrl,
-              logo: `${seoConfig.siteUrl}${seoConfig.ogImage}`,
+              // schema.org logo points to the primary application logo (not OG image)
+              logo: `${seoConfig.siteUrl}/logos/logo-master.svg`,
               sameAs: [
-                "https://www.facebook.com/tciexpress",
-                "https://twitter.com/tciexpress",
-                "https://www.linkedin.com/company/tci-express-ltd",
-                "https://www.instagram.com/tciexpress"
+                socialConfig.facebook,
+                socialConfig.twitter,
+                socialConfig.linkedin,
+                socialConfig.instagram
               ],
               contactPoint: {
                 "@type": "ContactPoint",
-                telephone: companyInfo.phone,
+                telephone: contactConfig.phone,
                 contactType: "customer service",
                 areaServed: "IN",
                 availableLanguage: ["en", "hi"]
@@ -118,6 +119,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <FloatingWhatsAppButton />
         <ScrollToTopButton />
         <PromotionalPopup />
+        <AnalyticsProviders />
 
       </body>
     </html>

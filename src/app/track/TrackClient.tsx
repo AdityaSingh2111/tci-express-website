@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { companyInfo } from "@/data/company";
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
 
 const DEMO_SHIPMENT = {
   consignmentNo: "TCI-2026-9823",
@@ -76,7 +77,7 @@ const DEMO_SHIPMENT = {
 const STATUS_COLORS: Record<string, { bg: string; text: string; dot: string }> = {
   "In Transit":       { bg: "bg-[#FEF3C7]", text: "text-[#B45309]", dot: "bg-[#D97706]" },
   "Delivered":        { bg: "bg-[#DCFCE7]", text: "text-[#15803D]", dot: "bg-[#16A34A]" },
-  "Booking Confirmed":{ bg: "bg-[#EEF4FF]", text: "text-[#0052CC]", dot: "bg-[#0052CC]" },
+  "Booking Confirmed":{ bg: "bg-[#EEF4FF]", text: "text-brand-blue", dot: "bg-brand-blue" },
   "Picked Up":        { bg: "bg-[#F5F3FF]", text: "text-[#7C3AED]", dot: "bg-[#7C3AED]" },
 };
 
@@ -87,18 +88,44 @@ function getStatusStyle(status: string) {
 export function TrackClient() {
   const [query, setQuery] = useState("");
   const [searched, setSearched] = useState(false);
+  const [error, setError] = useState("");
 
   function handleTrack(e: React.FormEvent) {
     e.preventDefault();
-    if (query.trim()) setSearched(true);
+    const val = query.trim();
+    if (!val) {
+      setError("Please enter your tracking ID.");
+      const el = document.getElementById("trackInput");
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.focus();
+      }
+      return;
+    }
+    if (val.length < 5) {
+      setError("Tracking IDs usually contain letters and numbers.");
+      const el = document.getElementById("trackInput");
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.focus();
+      }
+      return;
+    }
+    setError("");
+    setSearched(true);
   }
+
+  const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value.toUpperCase());
+    if (error) setError("");
+  };
 
   const style = getStatusStyle(DEMO_SHIPMENT.currentStatus);
 
   return (
     <main>
       {/* ── Hero / Input ─────────────────────────────────────────────────── */}
-      <section className="relative w-full bg-[#00102A] overflow-hidden pt-10 pb-10 sm:pt-14 sm:pb-12">
+      <section className="relative w-full bg-brand-navy overflow-hidden pt-10 pb-10 sm:pt-14 sm:pb-12">
         <div
           className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full opacity-[0.06] pointer-events-none"
           style={{ background: "radial-gradient(circle, #0052CC 0%, transparent 70%)" }}
@@ -117,40 +144,45 @@ export function TrackClient() {
             </p>
 
             {/* Search form */}
-            <form onSubmit={handleTrack} className="flex flex-col sm:flex-row gap-3 max-w-xl">
+            <form onSubmit={handleTrack} className="flex flex-col gap-2 max-w-xl">
               <label htmlFor="trackInput" className="sr-only">Consignment or LR Number</label>
-              <div className="relative flex-1">
-                <input
-                  type="text"
-                  id="trackInput"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="e.g. TCI-2026-9823"
+              <div className="flex flex-col sm:flex-row gap-3">
+                <div className="relative flex-1">
+                  <input
+                    type="text"
+                    id="trackInput"
+                    value={query}
+                    onChange={handleQueryChange}
+                    placeholder="e.g. TCI-2026-9823"
+                    className={[
+                      "w-full h-[52px] pl-11 md:pl-12 pr-4 text-[15px] rounded-xl font-medium",
+                      "bg-white/10 border text-white placeholder:text-white/40",
+                      error ? "border-[#EF4444] focus:border-[#EF4444] focus:ring-4 focus:ring-[#EF4444]/20" : "border-white/15 focus:border-white/40 focus:ring-4 focus:ring-white/5",
+                      "focus:outline-none transition-all duration-200",
+                    ].join(" ")}
+                    autoComplete="off"
+                    spellCheck={false}
+                    aria-invalid={!!error}
+                    aria-describedby={error ? "trackInput-error" : undefined}
+                  />
+                  <svg className="absolute left-3.5 md:left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                  </svg>
+                </div>
+                <button
+                  type="submit"
                   className={[
-                    "w-full h-[52px] pl-11 pr-4 text-[15px] rounded-xl font-medium",
-                    "bg-white/10 border border-white/15 text-white placeholder:text-white/40",
-                    "focus:outline-none focus:bg-white/20 focus:border-white/40 focus:ring-4 focus:ring-white/5",
-                    "transition-all duration-200",
+                    "h-[52px] px-8 text-[15px] font-bold text-white rounded-xl shadow-lg",
+                    "bg-brand-blue hover:bg-[#0047B3] active:bg-[#003B99]",
+                    "transition-all duration-200 hover:-translate-y-0.5",
+                    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+                    "touch-manipulation shrink-0",
                   ].join(" ")}
-                  autoComplete="off"
-                  spellCheck={false}
-                />
-                <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                </svg>
+                >
+                  Track Status
+                </button>
               </div>
-              <button
-                type="submit"
-                className={[
-                  "h-[52px] px-8 text-[15px] font-bold text-white rounded-xl shadow-lg",
-                  "bg-[#0052CC] hover:bg-[#0047B3] active:bg-[#003B99]",
-                  "transition-all duration-200 hover:-translate-y-0.5",
-                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
-                  "touch-manipulation shrink-0",
-                ].join(" ")}
-              >
-                Track Status
-              </button>
+              {error && <p id="trackInput-error" className="text-[13px] text-[#EF4444] font-medium px-1">{error}</p>}
             </form>
           </div>
         </div>
@@ -163,15 +195,15 @@ export function TrackClient() {
           {/* Section label */}
           <div className="flex items-center justify-between mb-6">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#0052CC] mb-1">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-brand-blue mb-1">
                 {searched ? `Results for: ${query}` : "Sample Tracking View"}
               </p>
-              <h2 className="text-xl font-bold text-[#0D1117] tracking-[-0.02em]">
+              <h2 className="text-xl font-bold text-background-dark tracking-[-0.02em]">
                 Consignment #{DEMO_SHIPMENT.consignmentNo}
               </h2>
             </div>
-            <span className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold ${style.bg} ${style.text}`}>
-              <span className={`w-1.5 h-1.5 rounded-full ${style.dot}`} />
+            <span className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap shrink-0 ${style.bg} ${style.text}`}>
+              <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${style.dot}`} />
               {DEMO_SHIPMENT.currentStatus}
             </span>
           </div>
@@ -182,9 +214,9 @@ export function TrackClient() {
             <div className="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm overflow-hidden">
               {/* Header */}
               <div className="flex items-center justify-between px-6 py-5 border-b border-[#F3F4F6] bg-gray-50/50">
-                <h3 className="text-[15px] font-bold text-[#0D1117]">Shipment Timeline</h3>
-                <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold shadow-sm border border-black/5 ${style.bg} ${style.text}`}>
-                  <span className={`w-2 h-2 rounded-full shadow-inner ${style.dot}`} />
+                <h3 className="text-[15px] font-bold text-background-dark">Shipment Timeline</h3>
+                <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold shadow-sm border border-black/5 whitespace-nowrap shrink-0 ${style.bg} ${style.text}`}>
+                  <span className={`w-2 h-2 rounded-full shadow-inner shrink-0 ${style.dot}`} />
                   {DEMO_SHIPMENT.currentStatus}
                 </span>
               </div>
@@ -202,7 +234,7 @@ export function TrackClient() {
                         className={[
                           "absolute -left-[9px] top-0.5 flex w-[18px] h-[18px] rounded-full items-center justify-center",
                           step.active
-                            ? "bg-[#0052CC] ring-4 ring-[#0052CC]/20"
+                            ? "bg-brand-blue ring-4 ring-brand-blue/20"
                             : step.done
                             ? "bg-[#16A34A]"
                             : "bg-[#E5E7EB]",
@@ -223,10 +255,10 @@ export function TrackClient() {
                       <div>
                         {/* Status + badge on same row */}
                         <div className="flex items-start gap-2 flex-wrap">
-                          <p className={`text-[15px] font-bold leading-tight ${step.done || step.active ? 'text-[#0D1117]' : 'text-[#9CA3AF]'}`}>
+                          <p className={`text-[15px] font-bold leading-tight ${step.done || step.active ? 'text-background-dark' : 'text-[#9CA3AF]'}`}>
                             {step.status}
                             {step.active && (
-                              <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#0052CC] text-white align-middle shadow-sm">
+                              <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-brand-blue text-white align-middle shadow-sm whitespace-nowrap shrink-0">
                                 Current
                               </span>
                             )}
@@ -252,7 +284,7 @@ export function TrackClient() {
               {/* Shipment Details card */}
               <div className="bg-white rounded-2xl border border-[#E5E7EB] shadow-sm overflow-hidden">
                 <div className="px-6 py-5 border-b border-[#F3F4F6] bg-gray-50/50">
-                  <h3 className="text-[15px] font-bold text-[#0D1117]">Shipment Details</h3>
+                  <h3 className="text-[15px] font-bold text-background-dark">Shipment Details</h3>
                 </div>
                 <div className="p-6 space-y-4">
                   {[
@@ -266,7 +298,7 @@ export function TrackClient() {
                   ].map((item) => (
                     <div key={item.label} className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-3 border-b border-dashed border-[#E5E7EB] pb-3 last:border-0 last:pb-0">
                       <span className="text-[13px] font-medium text-[#6B7280]">{item.label}</span>
-                      <span className="text-[14px] font-bold text-[#0D1117] sm:text-right">{item.value}</span>
+                      <span className="text-[14px] font-bold text-background-dark sm:text-right">{item.value}</span>
                     </div>
                   ))}
                 </div>
@@ -274,23 +306,23 @@ export function TrackClient() {
 
               {/* Help card */}
               <div className="bg-[#F8FAFC] rounded-2xl border border-[#E5E7EB] p-5">
-                <h3 className="text-sm font-bold text-[#0D1117] mb-2">Need Help?</h3>
+                <h3 className="text-sm font-bold text-background-dark mb-2">Need Help?</h3>
                 <p className="text-xs text-[#6B7280] leading-relaxed mb-4">
                   Can&apos;t find your shipment or have questions about your delivery? Our team is ready to help.
                 </p>
                 <div className="flex flex-col gap-2.5">
                   <a
-                    href={`tel:${companyInfo.phone}`}
-                    className="flex items-center justify-center gap-2 h-10 text-xs font-semibold text-[#0D1117] rounded-lg border border-[#E5E7EB] bg-white hover:bg-[#F9FAFB] transition-colors duration-150 touch-manipulation"
+                    href={`tel:${contactConfig.phone}`}
+                    className="flex items-center justify-center gap-2 h-10 text-xs font-semibold text-background-dark rounded-lg border border-[#E5E7EB] bg-white hover:bg-[#F9FAFB] transition-colors duration-150 touch-manipulation"
                   >
-                    <svg className="w-3.5 h-3.5 text-[#0052CC]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75} aria-hidden="true">
+                    <svg className="w-3.5 h-3.5 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75} aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
                     </svg>
                     Call Support
                   </a>
                   <Link
                     href="/contact"
-                    className="flex items-center justify-center h-10 text-xs font-semibold text-[#0052CC] rounded-lg border border-[#0052CC]/20 bg-[#EEF4FF] hover:bg-[#DBEAFE] transition-colors duration-150 touch-manipulation"
+                    className="flex items-center justify-center h-10 text-xs font-semibold text-brand-blue rounded-lg border border-brand-blue/20 bg-[#EEF4FF] hover:bg-[#DBEAFE] transition-colors duration-150 touch-manipulation"
                   >
                     Submit a Query
                   </Link>
@@ -310,10 +342,10 @@ export function TrackClient() {
       <section className="w-full py-10 md:py-14 bg-white border-t border-[#E5E7EB]">
         <div className="w-full max-w-[1216px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-xl mb-8">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#0052CC] mb-2">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-brand-blue mb-2">
               How it works
             </p>
-            <h2 className="text-xl font-bold text-[#0D1117] tracking-[-0.02em]">
+            <h2 className="text-xl font-bold text-background-dark tracking-[-0.02em]">
               How Our Tracking Works
             </h2>
             <p className="text-sm text-[#6B7280] mt-2 leading-relaxed">
@@ -339,10 +371,10 @@ export function TrackClient() {
               },
             ].map((item) => (
               <div key={item.n} className="p-5 rounded-xl border border-[#E5E7EB] bg-[#F8FAFC]">
-                <span className="font-mono text-xl font-bold text-[#0052CC]/20 block mb-2">
+                <span className="font-mono text-xl font-bold text-brand-blue/20 block mb-2">
                   {item.n}
                 </span>
-                <h3 className="text-sm font-semibold text-[#0D1117] mb-1">{item.title}</h3>
+                <h3 className="text-sm font-semibold text-background-dark mb-1">{item.title}</h3>
                 <p className="text-xs text-[#6B7280] leading-relaxed">{item.desc}</p>
               </div>
             ))}
@@ -353,7 +385,7 @@ export function TrackClient() {
       {/* ── CTA ──────────────────────────────────────────────────────────── */}
       <section className="w-full py-12 bg-[#F8FAFC] border-t border-[#E5E7EB]">
         <div className="w-full max-w-[1216px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-xl font-bold text-[#0D1117] mb-2 tracking-[-0.02em]">
+          <h2 className="text-xl font-bold text-background-dark mb-2 tracking-[-0.02em]">
             Ready to Book Your Next Move?
           </h2>
           <p className="text-sm text-[#6B7280] mb-5 max-w-md mx-auto">
@@ -362,7 +394,7 @@ export function TrackClient() {
           <div className="flex flex-col sm:flex-row justify-center gap-3">
             <Link
               href="/quote"
-              className="inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white bg-[#E53E3E] rounded-lg hover:bg-[#CC2A2A] transition-colors touch-manipulation"
+              className="inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-white bg-brand-red rounded-lg hover:bg-[#CC2A2A] transition-colors touch-manipulation"
             >
               Request a Free Quote
             </Link>

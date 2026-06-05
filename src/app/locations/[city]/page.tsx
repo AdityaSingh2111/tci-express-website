@@ -2,8 +2,9 @@ import React from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { citiesData } from "@/data/cities";
-import { companyInfo } from "@/data/company";
-import { seoConfig } from "@/data/seo";
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
+import { seoConfig } from '@/config/seo';
 import { servicesData } from "@/data/services";
 import { SectionContainer } from "@/components/shared/SectionContainer";
 import { SectionHeader } from "@/components/shared/SectionHeader";
@@ -27,21 +28,21 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   if (!cityObj) return {};
 
   return {
-    title: `Best Packers and Movers in ${cityObj.name} | ${companyInfo.brandName}`,
-    description: `Looking for reliable logistics and shifting services in ${cityObj.name}? ${companyInfo.brandName} offers premium, secure, and on-time delivery across ${cityObj.name} and India.`,
+    title: `Best Packers and Movers in ${cityObj.name} | ${companyConfig.brandName}`,
+    description: `Looking for reliable logistics and shifting services in ${cityObj.name}? ${companyConfig.brandName} offers premium, secure, and on-time delivery across ${cityObj.name} and India.`,
     alternates: {
       canonical: `${seoConfig.siteUrl}/locations/${slugify(cityObj.name)}`,
     },
     openGraph: {
-      title: `Top Logistics Services in ${cityObj.name} | ${companyInfo.brandName}`,
+      title: `Top Logistics Services in ${cityObj.name} | ${companyConfig.brandName}`,
       description: `Premium shifting and commercial logistics in ${cityObj.name}.`,
       url: `${seoConfig.siteUrl}/locations/${slugify(cityObj.name)}`,
-      siteName: companyInfo.brandName,
+      siteName: companyConfig.brandName,
     },
     twitter: {
       card: "summary_large_image",
-      title: `Best Packers and Movers in ${cityObj.name} | ${companyInfo.brandName}`,
-      description: `Looking for reliable logistics and shifting services in ${cityObj.name}? ${companyInfo.brandName} offers premium, secure, and on-time delivery across ${cityObj.name} and India.`,
+      title: `Best Packers and Movers in ${cityObj.name} | ${companyConfig.brandName}`,
+      description: `Looking for reliable logistics and shifting services in ${cityObj.name}? ${companyConfig.brandName} offers premium, secure, and on-time delivery across ${cityObj.name} and India.`,
     }
   };
 }
@@ -87,13 +88,13 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       {/* City Hero */}
-      <SectionContainer className="bg-[#0052CC] text-white pt-24 pb-20">
+      <SectionContainer className="bg-brand-blue text-white pt-24 pb-20">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold tracking-[-0.03em] leading-tight mb-6">
             Premium Logistics & Relocation Services in <span className="text-blue-200">{cityObj.name}</span>
           </h1>
           <p className="text-lg md:text-xl text-blue-100 mb-8 leading-relaxed">
-            Whether you are shifting your home, moving an office, or require commercial freight transport in {cityObj.name}, {companyInfo.brandName} delivers unmatched reliability.
+            Whether you are shifting your home, moving an office, or require commercial freight transport in {cityObj.name}, {companyConfig.brandName} delivers unmatched reliability.
           </p>
           <div className="flex justify-center">
             <a href="/quote" className="inline-flex justify-center items-center px-8 py-4 bg-[#16A34A] text-white font-bold rounded-md hover:bg-[#15803d] transition-colors shadow-lg">

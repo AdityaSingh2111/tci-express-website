@@ -1,27 +1,28 @@
 import React from "react";
 import type { Metadata } from "next";
-import { companyInfo } from "@/data/company";
-import { seoConfig } from "@/data/seo";
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
+import { seoConfig } from '@/config/seo';
 import { SectionContainer } from "@/components/shared/SectionContainer";
 import { SectionHeader } from "@/components/shared/SectionHeader";
 import { CTAButton } from "@/components/shared/CTAButton";
 
 export const metadata: Metadata = {
-  title: `About Us | ${companyInfo.brandName}`,
-  description: `Learn about ${companyInfo.brandName}, our mission, vision, and why we are India's most trusted premium logistics and relocation service.`,
+  title: `About Us | ${companyConfig.brandName}`,
+  description: `Learn about ${companyConfig.brandName}, our mission, vision, and why we are India's most trusted premium logistics and relocation service.`,
   alternates: {
     canonical: `${seoConfig.siteUrl}/about`,
   },
   openGraph: {
-    title: `About Us | ${companyInfo.brandName}`,
-    description: `Learn about ${companyInfo.brandName}, our mission, vision, and why we are India's most trusted premium logistics and relocation service.`,
+    title: `About Us | ${companyConfig.brandName}`,
+    description: `Learn about ${companyConfig.brandName}, our mission, vision, and why we are India's most trusted premium logistics and relocation service.`,
     url: `${seoConfig.siteUrl}/about`,
-    siteName: companyInfo.brandName,
+    siteName: companyConfig.brandName,
   },
   twitter: {
     card: "summary_large_image",
-    title: `About Us | ${companyInfo.brandName}`,
-    description: `Learn about ${companyInfo.brandName}, our mission, vision, and why we are India's most trusted premium logistics and relocation service.`,
+    title: `About Us | ${companyConfig.brandName}`,
+    description: `Learn about ${companyConfig.brandName}, our mission, vision, and why we are India's most trusted premium logistics and relocation service.`,
   }
 };
 
@@ -54,7 +55,7 @@ export default function AboutPage() {
       {/* 1. Hero Section */}
       <SectionContainer className="bg-[#F9FAFB] pt-24 pb-16">
         <SectionHeader
-          title={`About ${companyInfo.brandName}`}
+          title={`About ${companyConfig.brandName}`}
           subtitle="Building trust through safe, secure, and on-time logistics solutions across India."
           as="h1"
         />
@@ -64,16 +65,16 @@ export default function AboutPage() {
       <SectionContainer>
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-lg md:text-xl text-[#4B5563] leading-relaxed mb-6">
-            At <strong>{companyInfo.brandName}</strong>, we believe that moving should be an exciting journey, not a stressful task. Operating as {companyInfo.legalName}, we have established ourselves as a premier logistics partner offering end-to-end relocation services.
+            At <strong>{companyConfig.brandName}</strong>, we believe that moving should be an exciting journey, not a stressful task. Operating as {companyConfig.legalName}, we have established ourselves as a premier logistics partner offering end-to-end relocation services.
           </p>
           <p className="text-lg md:text-xl text-[#4B5563] leading-relaxed">
-            Our commitment to quality, combined with our extensive pan-India network, allows us to deliver {companyInfo.tagline.toLowerCase()}.
+            Our commitment to quality, combined with our extensive pan-India network, allows us to deliver {companyConfig.tagline.toLowerCase()}.
           </p>
         </div>
       </SectionContainer>
 
       {/* 3 & 4. Mission and Vision */}
-      <SectionContainer className="bg-[#0052CC] text-white">
+      <SectionContainer className="bg-brand-blue text-white">
         <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
           {/* Mission */}
           <div className="bg-white/10 p-8 rounded-xl backdrop-blur-sm">
@@ -105,7 +106,7 @@ export default function AboutPage() {
             { title: "Status Tracking", desc: "Status-based updates on your shipment." },
             { title: "Transit Insurance", desc: "Comprehensive risk coverage." },
             { title: "On-Time Delivery", desc: "Strict adherence to schedules." },
-            { title: "24/7 Support", desc: `Always available: ${companyInfo.supportHours}.` },
+            { title: "24/7 Support", desc: `Always available: ${companyConfig.supportHours}.` },
           ].map((feature, idx) => (
             <div key={idx} className="p-6 bg-white border border-[#E5E7EB] rounded-lg shadow-sm hover:shadow-md transition-shadow">
               <h4 className="text-xl font-semibold text-[#000000] mb-2">{feature.title}</h4>
@@ -120,7 +121,7 @@ export default function AboutPage() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-[#000000] mb-6">Pan India Coverage</h2>
           <p className="text-lg text-[#4B5563] leading-relaxed">
-            From metropolitan cities to remote locations, our robust network spans the entire nation. We ensure that distance is never a barrier to a safe and secure move. Wherever you are moving, {companyInfo.brandName} is already there.
+            From metropolitan cities to remote locations, our robust network spans the entire nation. We ensure that distance is never a barrier to a safe and secure move. Wherever you are moving, {companyConfig.brandName} is already there.
           </p>
         </div>
       </SectionContainer>

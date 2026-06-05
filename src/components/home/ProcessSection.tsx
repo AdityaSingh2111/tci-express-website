@@ -27,7 +27,7 @@ export function ProcessSection() {
   ];
 
   return (
-    <SectionContainer className="bg-[#F8FAFC]">
+    <SectionContainer className="bg-[#F9FAFB]">
       <SectionHeader
         eyebrow="Our process"
         title="Relocation in 4 Simple Steps"
@@ -47,13 +47,13 @@ export function ProcessSection() {
           {steps.map((step, index) => (
             <div key={step.title} className="relative flex md:flex-col items-start md:items-center gap-4 md:gap-3 text-left md:text-center z-10">
               {/* Step number circle */}
-              <div className="shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-white border-2 border-[#0052CC] text-sm font-bold text-[#0052CC] font-mono shadow-sm">
+              <div className="shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-white border-2 border-brand-blue text-sm font-bold text-brand-blue font-mono shadow-sm">
                 {String(index + 1).padStart(2, '0')}
               </div>
 
               {/* Content */}
               <div className="flex-1 md:flex-none">
-                <h3 className="text-sm font-semibold text-[#0D1117] mb-1">{step.title}</h3>
+                <h3 className="text-sm font-semibold text-background-dark mb-1">{step.title}</h3>
                 <p className="text-xs text-[#6B7280] leading-relaxed">{step.description}</p>
               </div>
             </div>

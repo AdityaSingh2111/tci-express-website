@@ -3,7 +3,9 @@ import Image from 'next/image';
 import { SectionContainer } from '../shared/SectionContainer';
 import { SectionHeader } from '../shared/SectionHeader';
 import { SecondaryButton } from '../shared/SecondaryButton';
-import { companyInfo } from '@/data/company';
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
+import { mediaConfig } from '@/config/media';
 
 /**
  * GalleryPreview
@@ -14,24 +16,18 @@ import { companyInfo } from '@/data/company';
  * - Mobile: 2-column layout
  * Server Component. No client-side lightbox state.
  */
-const galleryImages = [
-  { id: 1, src: '/images/gallery/packing-1.svg', alt: 'Professional packing of delicate items', twClass: 'col-span-2 row-span-2' },
-  { id: 2, src: '/images/gallery/truck-loading.svg', alt: 'Safe loading into enclosed carriers', twClass: 'col-span-1 row-span-1' },
-  { id: 3, src: '/images/gallery/warehouse-1.svg', alt: 'Secure climate-controlled warehousing', twClass: 'col-span-1 row-span-1' },
-  { id: 4, src: '/images/gallery/office-move.svg', alt: 'IT equipment relocation', twClass: 'col-span-1 row-span-1' },
-  { id: 5, src: '/images/gallery/car-transport.svg', alt: 'Enclosed vehicle transportation', twClass: 'col-span-1 row-span-1' },
-];
+
 
 export function GalleryPreview() {
   return (
-    <SectionContainer className="bg-white">
+    <SectionContainer className="bg-background-dark">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-6">
         <div className="max-w-2xl">
           <SectionHeader 
-            title={`${companyInfo.brandName} in Action`}
+            title={`${companyConfig.brandName} in Action`}
             subtitle="Browse through our gallery to see how we handle your valuable possessions with utmost care and professionalism."
             alignment="left"
-            theme="light"
+            theme="dark"
           />
         </div>
         <div className="shrink-0 mb-4 md:mb-0">
@@ -42,10 +38,10 @@ export function GalleryPreview() {
       </div>
       
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[160px] lg:auto-rows-[220px]">
-        {galleryImages.map((img) => (
+        {mediaConfig.galleryImages.map((img) => (
           <div 
             key={img.id} 
-            className={`relative rounded-[8px] overflow-hidden bg-[#F9FAFB] border border-[#E5E7EB] group ${img.twClass}`}
+            className={`relative rounded-[8px] overflow-hidden bg-gray-800 border border-white/10 group ${img.twClass}`}
           >
             <Image
               src={img.src}

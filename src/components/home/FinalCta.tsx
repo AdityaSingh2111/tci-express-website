@@ -1,17 +1,18 @@
 import React from 'react';
 import { CTAButton } from '../shared/CTAButton';
-import { companyInfo } from '@/data/company';
+import { companyConfig } from '@/config/company';
+import { contactConfig } from '@/config/contact';
 
 /**
  * FinalCta — Premium conversion section.
  * Clean, focused. Strong headline, two CTAs, trust indicators.
  */
 export function FinalCta() {
-  const whatsappUrl = `https://wa.me/${companyInfo.whatsapp.replace(/\D/g, '')}?text=Hi, I would like to get a quote for a relocation.`;
+  const whatsappUrl = `https://wa.me/${contactConfig.whatsapp.replace(/\D/g, '')}?text=Hi, I would like to get a quote for a relocation.`;
 
   return (
     <section
-      className="w-full bg-[#0D1117] py-16 lg:py-20"
+      className="w-full bg-brand-navy py-16 lg:py-20"
       aria-label="Final call to action"
     >
       <div className="max-w-[1216px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -28,7 +29,7 @@ export function FinalCta() {
 
           <p className="text-base text-white/55 mb-8 max-w-xl mx-auto leading-relaxed">
             Join thousands of satisfied customers who have trusted{' '}
-            <strong className="text-white font-semibold">{companyInfo.brandName}</strong>{' '}
+            <strong className="text-white font-semibold">{companyConfig.brandName}</strong>{' '}
             with their most valuable possessions.
           </p>
 
@@ -39,7 +40,7 @@ export function FinalCta() {
             </CTAButton>
 
             <a
-              href={`tel:${companyInfo.phone}`}
+              href={`tel:${contactConfig.phone}`}
               className={
                 'w-full sm:w-auto min-w-[200px] ' +
                 'inline-flex items-center justify-center ' +
@@ -50,7 +51,7 @@ export function FinalCta() {
                 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
               }
             >
-              {companyInfo.phone}
+              {contactConfig.phone}
             </a>
 
             <a

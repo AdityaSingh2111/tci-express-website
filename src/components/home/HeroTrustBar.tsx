@@ -19,7 +19,7 @@ export function HeroTrustBar() {
               className="flex flex-col items-center justify-center py-3 px-4 text-center"
             >
               <dd
-                className="font-mono text-xl md:text-2xl font-extrabold text-[#0052CC] tracking-tight leading-none"
+                className="font-mono text-xl md:text-2xl font-extrabold text-brand-blue tracking-tight leading-none"
                 aria-label={`${stat.value} ${stat.label}`}
               >
                 {stat.value}
