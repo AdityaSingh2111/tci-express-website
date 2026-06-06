@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { companyConfig } from '@/config/company';
 import { contactConfig } from '@/config/contact';
@@ -16,5 +16,9 @@ export const metadata: Metadata = {
 };
 
 export default function QuotePage() {
-  return <QuoteClient />;
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#F9FAFB] flex items-center justify-center">Loading...</div>}>
+      <QuoteClient />
+    </Suspense>
+  );
 }

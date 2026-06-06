@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -6,21 +6,31 @@ import { servicesData } from '@/data/services';
 
 import { CTAButton } from '@/components/shared/CTAButton';
 import { SectionContainer } from '@/components/shared/SectionContainer';
+import { LocationAutocomplete } from '@/components/forms/LocationAutocomplete';
+import { QuoteLeadPayload } from '@/types/lead';
 
-/**
- * QuickQuoteWidget — Premium redesign.
- * SaaS-grade form with clean field styling, proper label hierarchy,
- * and enterprise logistics feel.
- */
 export function QuickQuoteWidget() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    origin: '',
-    destination: '',
-    serviceType: servicesData[0]?.slug ?? '',
+  const [formData, setFormData] = useState<QuoteLeadPayload & { isWhatsAppSame: boolean }>({
+    customer_name: "",
+    phone_number: "",
+    whatsapp_number: "",
+    preferred_contact_method: "WhatsApp",
+    email: "",
+    service_type: servicesData[0]?.title ?? '',
+    vehicle_model: "",
+    pickup_place_id: "",
+    pickup_city: "",
+    pickup_state: "",
+    drop_place_id: "",
+    drop_city: "",
+    drop_state: "",
+    distance_km: "",
+    isWhatsAppSame: true,
+    pickup_address: "",
+    drop_address: ""
   });
+  
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -29,14 +39,15 @@ export function QuickQuoteWidget() {
     
     // Validation
     const newErrors: Record<string, string> = {};
-    if (!formData.name.trim()) newErrors.name = 'Please enter your full name.';
-    if (!formData.phone.trim()) {
-      newErrors.phone = 'Please enter a valid 10-digit mobile number.';
-    } else if (!/^[6-9]\d{9}$/.test(formData.phone.replace(/[\s-]/g, ''))) {
-      newErrors.phone = 'Please enter a valid 10-digit mobile number.';
+    if (!formData.customer_name.trim()) newErrors.customer_name = 'Please enter your full name.';
+    if (!formData.phone_number.trim()) {
+      newErrors.phone_number = 'Please enter a valid 10-digit mobile number.';
+    } else if (!/^[6-9]\d{9}$/.test(formData.phone_number.replace(/[\s-]/g, ''))) {
+      newErrors.phone_number = 'Please enter a valid 10-digit mobile number.';
     }
-    if (!formData.origin.trim()) newErrors.origin = 'Please enter a pickup city.';
-    if (!formData.destination.trim()) newErrors.destination = 'Please enter a destination city.';
+    
+    if (!formData.pickup_address.trim()) newErrors.pickup_address = 'Please enter a pickup city.';
+    if (!formData.drop_address.trim()) newErrors.drop_address = 'Please enter a destination city.';
     
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -53,25 +64,31 @@ export function QuickQuoteWidget() {
     
     setErrors({});
     setIsSubmitting(true);
+    
+    // Pass this state to /quote via URL Search Params
+    const query = new URLSearchParams();
+    if (formData.customer_name) query.set('customer_name', formData.customer_name);
+    if (formData.phone_number) query.set('phone_number', formData.phone_number);
+    if (formData.pickup_address) query.set('pickup_address', formData.pickup_address);
+    if (formData.drop_address) query.set('drop_address', formData.drop_address);
+    if (formData.service_type) query.set('service_type', formData.service_type);
+
     setTimeout(() => {
       setIsSubmitting(false);
       // Navigate to full quote page so user can complete the detailed quote
-      router.push('/quote');
+      router.push(`/quote?${query.toString()}`);
     }, 600);
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  const updateForm = <K extends keyof (QuoteLeadPayload & { isWhatsAppSame: boolean }) & string>(
+    field: K,
+    value: (QuoteLeadPayload & { isWhatsAppSame: boolean })[K]
   ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear error on type
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: '' }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: '' }));
     }
   };
-
-  // Success state is no longer needed since we redirect to /quote
 
   const inputClass = (hasError: boolean) =>
     'w-full h-[44px] md:h-[48px] px-4 text-[15px] text-background-dark ' +
@@ -86,7 +103,7 @@ export function QuickQuoteWidget() {
   return (
     <SectionContainer className="bg-white py-16 lg:py-24 border-b border-[#E5E7EB] overflow-hidden">
       <div className="relative grid grid-cols-1 lg:grid-cols-[45%_55%] xl:grid-cols-2 gap-12 lg:gap-16 items-center">
-        {/* Decorative blobs — contained via parent overflow-hidden on SectionContainer */}
+        {/* Decorative blobs */}
         <div className="absolute -top-32 -right-32 w-[360px] h-[360px] rounded-full opacity-[0.08] pointer-events-none" style={{ background: 'radial-gradient(circle, #0052CC 0%, transparent 70%)' }} aria-hidden="true" />
         <div className="absolute -bottom-32 -left-32 w-[300px] h-[300px] rounded-full opacity-[0.06] pointer-events-none" style={{ background: 'radial-gradient(circle, #22C55E 0%, transparent 70%)' }} aria-hidden="true" />
         
@@ -133,136 +150,139 @@ export function QuickQuoteWidget() {
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="px-5 md:px-6 pt-5 pb-6 space-y-4" noValidate>
-        {/* Row 1: Name + Phone */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label htmlFor="qq-name" className={labelClass}>
-              Full Name <span className="text-brand-red">*</span>
-            </label>
-            <input
-              type="text"
-              id="qq-name"
-              name="name"
-              autoComplete="name"
-              value={formData.name}
-              onChange={handleChange}
-              className={inputClass(!!errors.name)}
-              placeholder="John Doe"
-              aria-invalid={!!errors.name}
-              aria-describedby={errors.name ? "qq-name-error" : undefined}
-            />
-            {errors.name && <p id="qq-name-error" className="text-xs text-brand-red mt-1 font-medium">{errors.name}</p>}
-          </div>
-          <div>
-            <label htmlFor="qq-phone" className={labelClass}>
-              Phone <span className="text-brand-red">*</span>
-            </label>
-            <input
-              type="tel"
-              id="qq-phone"
-              name="phone"
-              autoComplete="tel"
-              value={formData.phone}
-              onChange={handleChange}
-              className={inputClass(!!errors.phone)}
-              placeholder="+91 98765 43210"
-              aria-invalid={!!errors.phone}
-              aria-describedby={errors.phone ? "qq-phone-error" : undefined}
-            />
-            {errors.phone && <p id="qq-phone-error" className="text-xs text-brand-red mt-1 font-medium">{errors.phone}</p>}
-          </div>
-        </div>
+              {/* Row 1: Name + Phone */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="qq-customer_name" className={labelClass}>
+                    Full Name <span className="text-brand-red">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="qq-customer_name"
+                    value={formData.customer_name}
+                    onChange={(e) => updateForm("customer_name", e.target.value)}
+                    className={inputClass(!!errors.customer_name)}
+                    placeholder="John Doe"
+                    aria-invalid={!!errors.customer_name}
+                    aria-describedby={errors.customer_name ? "qq-customer_name-error" : undefined}
+                  />
+                  {errors.customer_name && <p id="qq-customer_name-error" className="text-xs text-brand-red mt-1 font-medium">{errors.customer_name}</p>}
+                </div>
+                <div>
+                  <label htmlFor="qq-phone_number" className={labelClass}>
+                    Phone <span className="text-brand-red">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    id="qq-phone_number"
+                    value={formData.phone_number}
+                    onChange={(e) => updateForm("phone_number", e.target.value)}
+                    className={inputClass(!!errors.phone_number)}
+                    placeholder="+91 98765 43210"
+                    aria-invalid={!!errors.phone_number}
+                    aria-describedby={errors.phone_number ? "qq-phone_number-error" : undefined}
+                  />
+                  {errors.phone_number && <p id="qq-phone_number-error" className="text-xs text-brand-red mt-1 font-medium">{errors.phone_number}</p>}
+                </div>
+              </div>
 
-        {/* Row 2: Origin + Destination */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label htmlFor="qq-origin" className={labelClass}>
-              Moving From <span className="text-brand-red">*</span>
-            </label>
-            <input
-              type="text"
-              id="qq-origin"
-              name="origin"
-              value={formData.origin}
-              onChange={handleChange}
-              className={inputClass(!!errors.origin)}
-              placeholder="e.g. Delhi"
-              aria-invalid={!!errors.origin}
-              aria-describedby={errors.origin ? "qq-origin-error" : undefined}
-            />
-            {errors.origin && <p id="qq-origin-error" className="text-xs text-brand-red mt-1 font-medium">{errors.origin}</p>}
-          </div>
-          <div>
-            <label htmlFor="qq-destination" className={labelClass}>
-              Moving To <span className="text-brand-red">*</span>
-            </label>
-            <input
-              type="text"
-              id="qq-destination"
-              name="destination"
-              value={formData.destination}
-              onChange={handleChange}
-              className={inputClass(!!errors.destination)}
-              placeholder="e.g. Mumbai"
-              aria-invalid={!!errors.destination}
-              aria-describedby={errors.destination ? "qq-destination-error" : undefined}
-            />
-            {errors.destination && <p id="qq-destination-error" className="text-xs text-brand-red mt-1 font-medium">{errors.destination}</p>}
-          </div>
-        </div>
+              {/* Row 2: Origin + Destination */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="qq-pickup_address" className={labelClass}>
+                    Moving From <span className="text-brand-red">*</span>
+                  </label>
+                  <div className="relative">
+                    <LocationAutocomplete
+                      id="qq-pickup_address"
+                      value={formData.pickup_address}
+                      onChange={(data) => {
+                        updateForm("pickup_address", data.address);
+                        updateForm("pickup_place_id", data.place_id);
+                        updateForm("pickup_city", data.city);
+                        updateForm("pickup_state", data.state);
+                      }}
+                      placeholder="e.g. Delhi"
+                      hasError={!!errors.pickup_address}
+                      errorMessage={errors.pickup_address}
+                      align="left"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="qq-drop_address" className={labelClass}>
+                    Moving To <span className="text-brand-red">*</span>
+                  </label>
+                  <div className="relative">
+                    <LocationAutocomplete
+                      id="qq-drop_address"
+                      value={formData.drop_address}
+                      onChange={(data) => {
+                        updateForm("drop_address", data.address);
+                        updateForm("drop_place_id", data.place_id);
+                        updateForm("drop_city", data.city);
+                        updateForm("drop_state", data.state);
+                      }}
+                      placeholder="e.g. Mumbai"
+                      hasError={!!errors.drop_address}
+                      errorMessage={errors.drop_address}
+                      align="right"
+                    />
+                  </div>
+                </div>
+              </div>
 
-        {/* Service type */}
-        <div>
-          <label htmlFor="qq-service" className={labelClass}>
-            Service Type
-          </label>
-          <div className="relative">
-            <select
-              id="qq-service"
-              name="serviceType"
-              value={formData.serviceType}
-              onChange={handleChange}
-              className={`${inputClass(false)} appearance-none pr-9 cursor-pointer`}
-            >
-              {servicesData.map((s) => (
-                <option key={s.slug} value={s.slug}>
-                  {s.title}
-                </option>
-              ))}
-            </select>
-            <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9CA3AF] pointer-events-none" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
-            </svg>
-          </div>
-        </div>
+              {/* Service type */}
+              <div>
+                <label htmlFor="qq-service_type" className={labelClass}>
+                  Service Type
+                </label>
+                <div className="relative">
+                  <select
+                    id="qq-service_type"
+                    value={formData.service_type}
+                    onChange={(e) => updateForm("service_type", e.target.value)}
+                    className={`${inputClass(false)} appearance-none pr-9 cursor-pointer`}
+                  >
+                    {servicesData.map((s) => (
+                      <option key={s.title} value={s.title}>
+                        {s.title}
+                      </option>
+                    ))}
+                  </select>
+                  <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9CA3AF] pointer-events-none" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                  </svg>
+                </div>
+              </div>
 
-        <div className="flex justify-center mt-6">
-          <CTAButton
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full sm:w-auto min-w-[240px]"
-          >
-            {isSubmitting ? (
-              <span className="flex items-center gap-2">
-                <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Processing...
-              </span>
-            ) : (
-              'Get Instant Quote'
-            )}
-          </CTAButton>
-        </div>
+              <div className="flex justify-center mt-6">
+                <CTAButton
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full sm:w-auto min-w-[240px]"
+                >
+                  {isSubmitting ? (
+                    <span className="flex items-center gap-2">
+                      <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Processing...
+                    </span>
+                  ) : (
+                    'Get Instant Quote'
+                  )}
+                </CTAButton>
+              </div>
 
-        {/* Fine print + link to full form */}
-        <div className="flex items-center justify-center">
-          <p className="text-[11px] text-[#9CA3AF] text-center leading-relaxed">
-            Your details will be pre-filled on the next page. No spam.
-          </p>
-        </div>
-      </form>
+              {/* Fine print */}
+              <div className="flex items-center justify-center">
+                <p className="text-[11px] text-[#9CA3AF] text-center leading-relaxed">
+                  Your details will be pre-filled on the next page. No spam.
+                </p>
+              </div>
+            </form>
           </div>
         </div>
       </div>

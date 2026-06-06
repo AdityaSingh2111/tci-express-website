@@ -1,0 +1,314 @@
+﻿
+> logistics-platform@0.1.0 lint
+> eslint
+
+
+C:\website\tci express\logistics-platform\fix-navbar.js
+    1:12  error    A `require()` style import is forbidden        @typescript-eslint/no-require-imports
+    8:9   warning  'newBlock' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  192:9   warning  'before' is assigned a value but never used    @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\rebuild-navbar.js
+  1:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\website\tci express\logistics-platform\refactor-company.js
+  1:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\website\tci express\logistics-platform\refactor-global.js
+  1:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\website\tci express\logistics-platform\remove-duplicate-div.js
+  1:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\website\tci express\logistics-platform\replace-colors.js
+  1:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\website\tci express\logistics-platform\src\app\about\page.tsx
+  4:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\app\blog\[slug]\page.tsx
+  6:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+  9:10  warning  'SectionHeader' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\app\blog\page.tsx
+  5:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\app\careers\page.tsx
+  5:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\app\faq\page.tsx
+  4:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\app\gallery\page.tsx
+  4:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\app\industries\[slug]\page.tsx
+  8:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\app\industries\page.tsx
+  4:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\app\locations\[city]\page.tsx
+  6:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\app\locations\page.tsx
+  5:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\app\manifest.ts
+  3:10  warning  'seoConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\app\privacy\page.tsx
+  4:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\app\quote\layout.tsx
+  4:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\app\quote\page.tsx
+  4:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\app\services\[slug]\page.tsx
+  7:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\app\services\page.tsx
+   4:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+  10:10  warning  'CTAButton' is defined but never used      @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\app\terms\page.tsx
+  4:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\app\track\TrackClient.tsx
+  5:10  warning  'companyConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\app\track\page.tsx
+  4:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\components\gallery\GalleryPreview.tsx
+  7:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\components\home\CoverageAcrossIndia.tsx
+  8:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\components\home\HeroSection.tsx
+  4:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\components\home\StatisticsSection.tsx
+  3:10  warning  'SectionHeader' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\components\layout\FloatingWhatsAppButton.tsx
+  4:10  warning  'companyConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\components\layout\MobileBottomNav.tsx
+  5:10  warning  'companyConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\components\layout\Navbar.tsx
+  6:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\components\seo\SeoContentBlock.tsx
+  4:10  warning  'contactConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\components\tracking\ShipmentTrackingPreview.tsx
+  4:10  warning  'CTAButton' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\src\data\careers.ts
+  1:10  warning  'JobPosition' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\vrl-admin-reference\admin\Dashboard.jsx
+  127:10  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+  125 |       {/* Stats Grid */}
+  126 |       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+> 127 |         <StatCard 
+      |          ^^^^^^^^ This component is created during render
+  128 |           title="New (Today)" 
+  129 |           count={stats.today} 
+  130 |           icon={FaClock} 
+
+   72 |   };
+   73 |
+>  74 |   const StatCard = ({ title, count, icon: Icon, gradient, subtext }) => (
+      |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  75 |     <motion.div 
+      | ^^^^^^^^^^^^^^^^
+>  76 |       variants={itemVariants}
+      ΓÇª
+      | ^^^^^^^^^^^^^^^^
+> 105 |     </motion.div>
+      | ^^^^^^^^^^^^^^^^
+> 106 |   );
+      | ^^^^ The component is created during render here
+  107 |
+  108 |   return (
+  109 |     <motion.div   react-hooks/static-components
+  134:10  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+  132 |           subtext="Leads received today"
+  133 |         />
+> 134 |         <StatCard 
+      |          ^^^^^^^^ This component is created during render
+  135 |           title="Total Leads" 
+  136 |           count={stats.total} 
+  137 |           icon={FaUsers} 
+
+   72 |   };
+   73 |
+>  74 |   const StatCard = ({ title, count, icon: Icon, gradient, subtext }) => (
+      |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  75 |     <motion.div 
+      | ^^^^^^^^^^^^^^^^
+>  76 |       variants={itemVariants}
+      ΓÇª
+      | ^^^^^^^^^^^^^^^^
+> 105 |     </motion.div>
+      | ^^^^^^^^^^^^^^^^
+> 106 |   );
+      | ^^^^ The component is created during render here
+  107 |
+  108 |   return (
+  109 |     <motion.div                                                     react-hooks/static-components
+  141:10  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+  139 |           subtext="Lifetime enquiries"
+  140 |         />
+> 141 |         <StatCard 
+      |          ^^^^^^^^ This component is created during render
+  142 |           title="Pending Leads" 
+  143 |           count={stats.pending} 
+  144 |           icon={FaClipboardList} 
+
+   72 |   };
+   73 |
+>  74 |   const StatCard = ({ title, count, icon: Icon, gradient, subtext }) => (
+      |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  75 |     <motion.div 
+      | ^^^^^^^^^^^^^^^^
+>  76 |       variants={itemVariants}
+      ΓÇª
+      | ^^^^^^^^^^^^^^^^
+> 105 |     </motion.div>
+      | ^^^^^^^^^^^^^^^^
+> 106 |   );
+      | ^^^^ The component is created during render here
+  107 |
+  108 |   return (
+  109 |     <motion.div                                           react-hooks/static-components
+  148:10  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+  146 |           subtext="Requires action"
+  147 |         />
+> 148 |         <StatCard 
+      |          ^^^^^^^^ This component is created during render
+  149 |           title="Active Shipments" 
+  150 |           count={stats.shipments} 
+  151 |           icon={FaTruck} 
+
+   72 |   };
+   73 |
+>  74 |   const StatCard = ({ title, count, icon: Icon, gradient, subtext }) => (
+      |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  75 |     <motion.div 
+      | ^^^^^^^^^^^^^^^^
+>  76 |       variants={itemVariants}
+      ΓÇª
+      | ^^^^^^^^^^^^^^^^
+> 105 |     </motion.div>
+      | ^^^^^^^^^^^^^^^^
+> 106 |   );
+      | ^^^^ The component is created during render here
+  107 |
+  108 |   return (
+  109 |     <motion.div                                                 react-hooks/static-components
+
+C:\website\tci express\logistics-platform\vrl-admin-reference\admin\Leads.jsx
+    4:158  warning  'FaMapMarkedAlt' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+    4:183  warning  'FaTimes' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+   59:5    error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  57 |     }
+  58 |
+> 59 |     setFilteredLeads(result);
+     |     ^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  60 |     setCurrentPage(1); 
+  61 |   }, [searchTerm, filterService, selectedDate, allLeads]);
+  62 |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     react-hooks/set-state-in-effect
+  249:25   error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+  247 |               <tr>
+  248 |                 <th className="p-5 w-24 cursor-pointer hover:bg-blue-700 transition-colors select-none align-middle" onClick={() => handleSort('createdAt')}>
+> 249 |                   S.No <SortIcon columnKey="createdAt" />
+      |                         ^^^^^^^^ This component is created during render
+  250 |                 </th>
+  251 |                 <th className="p-5 align-middle min-w-[180px]">
+  252 |                   <div className="flex flex-col gap-1.5">
+
+  101 |   };
+  102 |
+> 103 |   const SortIcon = ({ columnKey }) => {
+      |                    ^^^^^^^^^^^^^^^^^^^^
+> 104 |     if (sortConfig.key !== columnKey && !(columnKey === 's_no' && sortConfig.key === 'createdAt')) {
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 105 |       return <FaSort className="inline ml-1 text-blue-200 opacity-50" />;
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 106 |     }
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 107 |     return sortConfig.direction === 'asc' 
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 108 |       ? <FaSortUp className="inline ml-1 text-white" /> 
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 109 |       : <FaSortDown className="inline ml-1 text-white" />;
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 110 |   };
+      | ^^^^ The component is created during render here
+  111 |
+  112 |   const containerVariants = {
+  113 |     hidden: { opacity: 0 },  react-hooks/static-components
+  309:189  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        react/no-unescaped-entities
+  309:202  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        react/no-unescaped-entities
+
+C:\website\tci express\logistics-platform\vrl-admin-reference\admin\Login.jsx
+  5:45  warning  'FaCheckCircle' is defined but never used    @typescript-eslint/no-unused-vars
+  6:10  warning  'motion' is defined but never used           @typescript-eslint/no-unused-vars
+  6:18  warning  'AnimatePresence' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\website\tci express\logistics-platform\vrl-admin-reference\admin\Tracking.jsx
+    4:142  warning  'FaTruck' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+    4:151  warning  'FaBoxOpen' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+   11:10   warning  'loading' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+   91:5    error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  89 |     });
+  90 |
+> 91 |     setFilteredConsignments(result);
+     |     ^^^^^^^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  92 |     setCurrentPage(1); // Reset page on filter change
+  93 |   }, [searchTerm, filterStatus, sortOrder, allConsignments]);
+  94 |  react-hooks/set-state-in-effect
+  156:14   warning  'error' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+  180:14   warning  'error' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+
+Γ£û 61 problems (18 errors, 43 warnings)
+

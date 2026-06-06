@@ -1,16 +1,86 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/set-state-in-effect */
 'use client';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Script from 'next/script';
+
+export interface LocationData {
+  address: string;
+  place_id: string;
+  city: string;
+  state: string;
+}
 
 interface LocationAutocompleteProps {
   id: string;
-  value: string;
-  onChange: (value: string) => void;
+  value: string; // The display value
+  onChange: (data: LocationData) => void;
   placeholder?: string;
   hasError?: boolean;
   errorMessage?: string;
+  align?: 'left' | 'right';
 }
+
+interface PredictionParsedText {
+  mainText: string;
+  secondaryText: string;
+}
+
+// Robust helper to safely extract and split prediction text into Primary/Secondary lines
+const getPredictionText = (suggestion: any): PredictionParsedText => {
+  const prediction = suggestion?.placePrediction;
+  if (!prediction) return { mainText: "", secondaryText: "" };
+  
+  // Try mainText & secondaryText (new API FormattedText)
+  const main = prediction.mainText && typeof prediction.mainText === 'object' && 'text' in prediction.mainText 
+    ? prediction.mainText.text 
+    : (typeof prediction.mainText === 'string' ? prediction.mainText : "");
+    
+  const secondary = prediction.secondaryText && typeof prediction.secondaryText === 'object' && 'text' in prediction.secondaryText 
+    ? prediction.secondaryText.text 
+    : (typeof prediction.secondaryText === 'string' ? prediction.secondaryText : "");
+
+  if (main) {
+    return { mainText: main, secondaryText: secondary };
+  }
+
+  // Fallbacks if mainText/secondaryText are not populated: parse the full text string
+  let fullText = "";
+  if (prediction.text && typeof prediction.text === 'object' && 'text' in prediction.text) {
+    fullText = prediction.text.text;
+  } else if (typeof prediction.text === 'string') {
+    fullText = prediction.text;
+  } else if (typeof prediction.toString === 'function') {
+    const str = prediction.toString();
+    if (str !== '[object Object]') fullText = str;
+  }
+
+  // Legacy fallbacks
+  if (!fullText) {
+    if (suggestion.description) {
+      fullText = suggestion.description;
+    } else if (suggestion.structured_formatting?.main_text) {
+      return {
+        mainText: suggestion.structured_formatting.main_text,
+        secondaryText: suggestion.structured_formatting.secondary_text || ""
+      };
+    }
+  }
+
+  // Split fullText by first comma
+  if (fullText) {
+    const firstCommaIndex = fullText.indexOf(',');
+    if (firstCommaIndex !== -1) {
+      return {
+        mainText: fullText.substring(0, firstCommaIndex).trim(),
+        secondaryText: fullText.substring(firstCommaIndex + 1).trim()
+      };
+    }
+    return { mainText: fullText, secondaryText: "" };
+  }
+  
+  return { mainText: "", secondaryText: "" };
+};
 
 export function LocationAutocomplete({ 
   id, 
@@ -18,79 +88,186 @@ export function LocationAutocomplete({
   onChange, 
   placeholder = "Search location...",
   hasError,
-  errorMessage 
+  errorMessage,
+  align = 'left'
 }: LocationAutocompleteProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const sessionTokenRef = useRef<any>(null);
+  const ignoreNextFetch = useRef(false);
+
   const [isScriptLoaded, setIsScriptLoaded] = useState(
-    () => typeof window !== 'undefined' && !!window.google?.maps?.places
+    () => typeof window !== 'undefined' && !!window.google?.maps
   );
+  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
 
-  // ── Initialize Google Places Autocomplete ─────────────────────────────────
+  // Close dropdown on click outside
   useEffect(() => {
-    if (!isScriptLoaded || !inputRef.current || !window.google?.maps?.places) return;
-
-    const autocomplete = new window.google.maps.places.Autocomplete(inputRef.current, {
-      componentRestrictions: { country: "in" },
-      fields: ["formatted_address", "name"],
-    });
-    autocompleteRef.current = autocomplete;
-
-    const listener = autocomplete.addListener("place_changed", () => {
-      const place = autocomplete.getPlace();
-      if (place.formatted_address) {
-        onChange(place.formatted_address);
-      } else if (place.name) {
-        onChange(place.name);
-      }
-    });
-
-    return () => {
-      if (window.google) {
-        window.google.maps.event.removeListener(listener);
+    const handleClickOutside = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
       }
     };
-  }, [isScriptLoaded, onChange]);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
-  // ── Keyboard navigation ───────────────────────────────────────────────────
-  // The Google Places dropdown uses its own internal keyboard nav (Arrow keys,
-  // ENTER to select). We only need to handle ESC to close the dropdown and
-  // prevent form submission when the dropdown is open.
-  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Escape') {
-      // Close the Google Places dropdown by blurring and re-focusing
-      if (autocompleteRef.current && window.google) {
-        window.google.maps.event.trigger(autocompleteRef.current, 'place_changed');
+  // Reset highlight index when suggestions change
+  useEffect(() => {
+    setHighlightedIndex(-1);
+  }, [suggestions]);
+
+  // Fetch suggestions when value changes
+  useEffect(() => {
+    if (ignoreNextFetch.current) {
+      ignoreNextFetch.current = false;
+      return;
+    }
+
+    if (!isScriptLoaded || !window.google?.maps) return;
+
+    if (!value || value.trim().length < 2) {
+      setSuggestions([]);
+      setIsOpen(false);
+      setHighlightedIndex(-1);
+      return;
+    }
+
+    const fetchSuggestions = async () => {
+      try {
+        const { AutocompleteSuggestion, AutocompleteSessionToken } = 
+          await window.google.maps.importLibrary("places") as any;
+
+        if (!sessionTokenRef.current) {
+          sessionTokenRef.current = new AutocompleteSessionToken();
+        }
+
+        const request = {
+          input: value,
+          sessionToken: sessionTokenRef.current,
+          includedRegionCodes: ["in"], // Biased to India
+        };
+
+        const { suggestions: fetchedSuggestions } = 
+          await AutocompleteSuggestion.fetchAutocompleteSuggestions(request);
+
+        setSuggestions(fetchedSuggestions || []);
+        setHighlightedIndex(-1);
+        const isFocused = document.activeElement === inputRef.current;
+        if (isFocused && fetchedSuggestions && fetchedSuggestions.length > 0) {
+          setIsOpen(true);
+        } else {
+          setIsOpen(false);
+        }
+      } catch (err) {
+        console.error("Error fetching autocomplete suggestions:", err);
       }
+    };
+
+    // Debounce predictions fetching
+    const timer = setTimeout(fetchSuggestions, 300);
+    return () => clearTimeout(timer);
+  }, [value, isScriptLoaded]);
+
+  const handleSelect = async (suggestion: any) => {
+    ignoreNextFetch.current = true;
+    setIsOpen(false);
+
+    try {
+      const { Place, AutocompleteSessionToken } = await window.google.maps.importLibrary("places") as any;
+
+      const placeId = suggestion.placePrediction.placeId;
+      const place = new Place({ id: placeId });
+
+      await place.fetchFields({
+        fields: ["formattedAddress", "addressComponents"]
+      });
+
+      let city = "";
+      let state = "";
+
+      place.addressComponents?.forEach((component: any) => {
+        if (component.types.includes("locality")) {
+          city = component.longText || component.long_name || "";
+        } else if (component.types.includes("administrative_area_level_1")) {
+          state = component.longText || component.long_name || "";
+        }
+      });
+
+      // Fallback if locality is missing
+      if (!city) {
+        place.addressComponents?.forEach((component: any) => {
+          if (component.types.includes("administrative_area_level_2") || component.types.includes("sublocality_level_1")) {
+            if (!city) city = component.longText || component.long_name || "";
+          }
+        });
+      }
+
+      // Reset session token after a successful place details fetch
+      sessionTokenRef.current = new AutocompleteSessionToken();
+
+      const parsed = getPredictionText(suggestion);
+      const fallbackAddress = parsed.secondaryText ? `${parsed.mainText}, ${parsed.secondaryText}` : parsed.mainText;
+
+      onChange({
+        address: place.formattedAddress || fallbackAddress || "",
+        place_id: placeId,
+        city,
+        state
+      });
+    } catch (err) {
+      console.error("Error fetching place details:", err);
+      // Fallback to text suggestion only
+      const parsed = getPredictionText(suggestion);
+      const fallbackAddress = parsed.secondaryText ? `${parsed.mainText}, ${parsed.secondaryText}` : parsed.mainText;
+      onChange({
+        address: fallbackAddress,
+        place_id: suggestion.placePrediction.placeId,
+        city: "",
+        state: ""
+      });
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!isOpen) {
+      if (e.key === 'ArrowDown') {
+        setIsOpen(true);
+      }
+      return;
+    }
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setHighlightedIndex((prev) => (prev + 1 < suggestions.length ? prev + 1 : 0));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setHighlightedIndex((prev) => (prev - 1 >= 0 ? prev - 1 : suggestions.length - 1));
+    } else if (e.key === 'Enter') {
+      if (highlightedIndex >= 0 && highlightedIndex < suggestions.length) {
+        e.preventDefault();
+        handleSelect(suggestions[highlightedIndex]);
+      }
+    } else if (e.key === 'Escape') {
+      setIsOpen(false);
       if (inputRef.current) {
         inputRef.current.blur();
-        // Re-focus after a tick so the user doesn't lose context
         setTimeout(() => inputRef.current?.focus(), 0);
       }
     }
-    // Prevent ENTER from submitting the parent form when the Google dropdown is visible
-    if (e.key === 'Enter') {
-      const pacContainer = document.querySelector('.pac-container');
-      if (pacContainer && pacContainer.children.length > 0) {
-        e.preventDefault();
-      }
-    }
-  }, []);
+  };
 
   return (
     <>
-      {/*
-        Load Maps API lazily. The `lazyOnload` strategy defers until the
-        browser is idle — zero render-blocking impact.
-      */}
       <Script 
-        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''}&libraries=places`} 
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''}&loading=async`} 
         strategy="lazyOnload"
         onLoad={() => setIsScriptLoaded(true)}
       />
       
-      <div className="relative">
-        {/* Icon */}
+      <div className="relative" ref={containerRef}>
         <div
           className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-[#9CA3AF] flex items-center justify-center shrink-0"
           aria-hidden="true"
@@ -101,14 +278,18 @@ export function LocationAutocomplete({
           </svg>
         </div>
 
-        {/* Input */}
         <input
           ref={inputRef}
           type="text"
           id={id}
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => {
+            onChange({ address: e.target.value, place_id: "", city: "", state: "" });
+          }}
           onKeyDown={handleKeyDown}
+          onFocus={() => {
+            if (suggestions.length > 0) setIsOpen(true);
+          }}
           placeholder={placeholder}
           autoComplete="off"
           spellCheck={false}
@@ -121,11 +302,62 @@ export function LocationAutocomplete({
           aria-describedby={hasError && errorMessage ? `${id}-error` : undefined}
           aria-autocomplete="list"
           role="combobox"
-          aria-expanded="false"
+          aria-expanded={isOpen}
+          aria-controls={isOpen ? `${id}-listbox` : undefined}
         />
+
+        {isOpen && suggestions.length > 0 && (
+          <div 
+            id={`${id}-listbox`}
+            role="listbox"
+            className={`absolute z-[100] mt-1.5 bg-white border border-[#E5E7EB] rounded-[12px] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)] overflow-hidden max-h-[260px] overflow-y-auto divide-y divide-[#F3F4F6] w-full left-0 right-0 ${
+              align === 'right' 
+                ? 'lg:right-0 lg:left-auto lg:w-auto lg:min-w-[420px]' 
+                : 'lg:left-0 lg:right-auto lg:w-auto lg:min-w-[420px]'
+            }`}
+          >
+            {suggestions.map((suggestion, idx) => {
+              const { mainText, secondaryText } = getPredictionText(suggestion);
+              const isHighlighted = idx === highlightedIndex;
+              return (
+                <button
+                  key={suggestion.placePrediction?.placeId || idx}
+                  type="button"
+                  role="option"
+                  aria-selected={isHighlighted}
+                  onClick={() => handleSelect(suggestion)}
+                  className={`w-full text-left px-4 py-3 text-[14px] transition-colors flex items-center gap-3 focus:outline-none min-h-[56px] ${
+                    isHighlighted ? 'bg-[#F3F4F6] text-brand-blue' : 'text-slate-700 hover:bg-[#F3F4F6]'
+                  }`}
+                >
+                  {/* Location Icon on Left */}
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-colors ${
+                    isHighlighted ? 'bg-[#DBEAFE] text-brand-blue' : 'bg-slate-100 text-slate-400'
+                  }`}>
+                    <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  
+                  {/* Two-Line Suggestion Text */}
+                  <div className="flex flex-col min-w-0 flex-1">
+                    <span className="font-bold text-[14px] text-slate-800 truncate leading-tight">
+                      {mainText}
+                    </span>
+                    {secondaryText && (
+                      <span className="text-[12px] text-slate-500 truncate mt-0.5 font-medium leading-none">
+                        {secondaryText}
+                      </span>
+                    )}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
 
-      {/* Inline error message */}
       {hasError && errorMessage && (
         <p
           id={`${id}-error`}
