@@ -56,7 +56,14 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Protect admin routes
+  // Handle root /admin route
+  if (request.nextUrl.pathname === '/admin' || request.nextUrl.pathname === '/admin/') {
+    const url = request.nextUrl.clone()
+    url.pathname = user ? '/admin/dashboard' : '/admin/login'
+    return NextResponse.redirect(url)
+  }
+
+  // Protect all other admin routes
   if (request.nextUrl.pathname.startsWith('/admin') && request.nextUrl.pathname !== '/admin/login') {
     if (!user) {
       const url = request.nextUrl.clone()
