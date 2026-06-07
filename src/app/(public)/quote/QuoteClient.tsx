@@ -56,6 +56,7 @@ export function QuoteClient() {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSuccess, setIsSuccess] = useState(false);
+  const [leadId, setLeadId] = useState<string | null>(null);
 
   const updateForm = <K extends keyof (QuoteLeadPayload & { isWhatsAppSame: boolean; preferredDate: string; }) & string>(
     field: K,
@@ -137,7 +138,7 @@ export function QuoteClient() {
   const textareaClass = (hasError: boolean) =>
     `w-full max-w-full min-w-0 block p-4 rounded-[12px] bg-[#F9FAFB] border ${hasError ? 'border-brand-red focus:ring-brand-red/20 focus:border-brand-red bg-[#FEF2F2]' : 'border-[#D1D5DB] focus:ring-brand-blue/20 focus:border-brand-blue'} focus:bg-white focus:outline-none focus:ring-2 transition-colors text-[15px] resize-y placeholder:text-[#9CA3AF]`;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateStep(step)) {
       const payload: QuoteLeadPayload = {
@@ -145,8 +146,29 @@ export function QuoteClient() {
         whatsapp_number: formData.isWhatsAppSame ? formData.phone_number : formData.whatsapp_number,
       };
       console.log("Submitting payload:", payload);
-      setIsSuccess(true);
-      focusWizardCard();
+
+      try {
+        const response = await fetch('/api/quote', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to submit quote request');
+        }
+
+        if (data.lead?.id) {
+          setLeadId(data.lead.id);
+        }
+        setIsSuccess(true);
+        // Removed focusWizardCard() to prevent scrolling down
+      } catch (err) {
+        console.error("Submission failed:", err);
+        alert(err instanceof Error ? err.message : "Failed to submit quote request. Please try again later.");
+      }
     }
   };
 
@@ -168,24 +190,37 @@ export function QuoteClient() {
       <SectionContainer>
         <div className="max-w-2xl mx-auto px-2 sm:px-0">
           <div id="quote-wizard-card" className="scroll-mt-24">
-            {isSuccess ? (
-              <div className="bg-white p-5 sm:p-6 md:p-10 rounded-2xl shadow-sm border border-[#E5E7EB]">
-                <div className="py-8">
-                  <EmptyState
-                    title="Quote Submitted Successfully"
-                    description="Thank you for contacting us. Our logistics team will contact you shortly."
-                    icon={
-                      <svg className="w-8 h-8 text-[#16A34A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                    }
-                  />
+            {/* Success Modal Overlay */}
+            {isSuccess && (
+              <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-[#0F172A]/40 backdrop-blur-sm animate-in fade-in duration-300">
+                <div className="bg-white p-6 sm:p-8 md:p-10 rounded-[20px] shadow-2xl max-w-[480px] w-full text-center relative animate-in zoom-in-95 duration-300">
+                  <div className="mx-auto w-16 h-16 rounded-full bg-[#DCFCE7] flex items-center justify-center mb-6 ring-8 ring-[#DCFCE7]/30">
+                    <svg className="w-8 h-8 text-[#16A34A]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  
+                  <h3 className="text-2xl font-black text-[#0F172A] mb-3 tracking-tight">Quote Request Submitted!</h3>
+                  <p className="text-[15px] text-[#4B5563] leading-relaxed mb-6">
+                    Thank you for choosing us. Our logistics team will review your requirements and contact you shortly.
+                  </p>
+                  
+                  {leadId && (
+                    <div className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl p-4 mb-8 inline-block w-full">
+                      <span className="block text-[12px] font-bold text-[#64748B] uppercase tracking-wider mb-1">Reference ID</span>
+                      <span className="block text-lg font-mono font-bold text-[#0F172A]">{leadId.substring(0, 8).toUpperCase()}</span>
+                    </div>
+                  )}
+                  
+                  <CTAButton onClick={() => { window.location.href = '/'; }} className="w-full justify-center">
+                    Back to Homepage
+                  </CTAButton>
                 </div>
               </div>
-            ) : (
-              <>
-                {/* Progress Indicator */}
-                <div className="mb-8">
+            )}
+
+              {/* Progress Indicator */}
+              <div className="mb-8">
                   <div className="flex items-center justify-between relative">
                     <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-[#E5E7EB] -z-10 rounded-full"></div>
                     <div className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-[#16A34A] -z-10 rounded-full transition-all duration-300" style={{ width: `${((step - 1) / 3) * 100}%` }}></div>
@@ -427,9 +462,8 @@ export function QuoteClient() {
 
                   </form>
                 </div>
-              </>
-            )}
           </div>
+
         </div>
       </SectionContainer>
     </main>

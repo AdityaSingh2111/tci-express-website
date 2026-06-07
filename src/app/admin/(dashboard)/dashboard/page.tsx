@@ -1,5 +1,6 @@
 import StatCard from "@/components/admin/dashboard/StatCard";
 import { Users, FileText, Truck, Activity } from "lucide-react";
+import { getDashboardLeadCounters } from "@/actions/leads";
 
 export default async function DashboardPage() {
   const kolkataTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata", hour12: false, hour: 'numeric' });
@@ -10,6 +11,8 @@ export default async function DashboardPage() {
   else if (hour >= 12 && hour < 17) greeting = "Good Afternoon";
   else if (hour >= 17 && hour < 21) greeting = "Good Evening";
 
+  const { todayLeads, totalLeads } = await getDashboardLeadCounters();
+
   return (
     <div className="space-y-5 md:space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
       <div className="flex flex-col gap-1">
@@ -18,8 +21,8 @@ export default async function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
-        <StatCard title="Today's Leads" value="0" icon={Users} color="blue" />
-        <StatCard title="Total Leads" value="0" icon={FileText} color="purple" />
+        <StatCard title="Today's Leads" value={todayLeads} icon={Users} color="blue" />
+        <StatCard title="Total Leads" value={totalLeads} icon={FileText} color="purple" />
         <StatCard title="Booked Shipments" value="0" icon={Truck} color="red" />
         <StatCard title="Active Shipments" value="0" icon={Activity} color="green" />
       </div>

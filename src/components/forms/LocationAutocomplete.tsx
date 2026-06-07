@@ -310,11 +310,7 @@ export function LocationAutocomplete({
           <div 
             id={`${id}-listbox`}
             role="listbox"
-            className={`absolute z-[100] mt-1.5 bg-white border border-[#E5E7EB] rounded-[12px] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)] overflow-hidden max-h-[260px] overflow-y-auto divide-y divide-[#F3F4F6] w-full left-0 right-0 ${
-              align === 'right' 
-                ? 'lg:right-0 lg:left-auto lg:w-auto lg:min-w-[420px]' 
-                : 'lg:left-0 lg:right-auto lg:w-auto lg:min-w-[420px]'
-            }`}
+            className="absolute z-[9999] mt-2 bg-white border border-[#E5E7EB] rounded-[16px] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] overflow-hidden max-h-[280px] overflow-y-auto divide-y divide-[#F3F4F6] w-full left-0 right-0"
           >
             {suggestions.map((suggestion, idx) => {
               const { mainText, secondaryText } = getPredictionText(suggestion);
@@ -326,27 +322,27 @@ export function LocationAutocomplete({
                   role="option"
                   aria-selected={isHighlighted}
                   onClick={() => handleSelect(suggestion)}
-                  className={`w-full text-left px-4 py-3 text-[14px] transition-colors flex items-center gap-3 focus:outline-none min-h-[56px] ${
-                    isHighlighted ? 'bg-[#F3F4F6] text-brand-blue' : 'text-slate-700 hover:bg-[#F3F4F6]'
+                  className={`w-full text-left px-4 py-3.5 text-[15px] transition-colors flex items-center gap-3.5 focus:outline-none min-h-[64px] ${
+                    isHighlighted ? 'bg-[#F8FAFC] text-brand-blue' : 'text-slate-800 hover:bg-[#F8FAFC] active:bg-[#F1F5F9]'
                   }`}
                 >
                   {/* Location Icon on Left */}
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-colors ${
-                    isHighlighted ? 'bg-[#DBEAFE] text-brand-blue' : 'bg-slate-100 text-slate-400'
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors ${
+                    isHighlighted ? 'bg-[#EFF6FF] text-brand-blue' : 'bg-[#F1F5F9] text-[#64748B]'
                   }`}>
-                    <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                   </div>
                   
                   {/* Two-Line Suggestion Text */}
-                  <div className="flex flex-col min-w-0 flex-1">
-                    <span className="font-bold text-[14px] text-slate-800 truncate leading-tight">
+                  <div className="flex flex-col min-w-0 flex-1 justify-center">
+                    <span className="font-extrabold text-[15px] text-[#0F172A] truncate leading-snug">
                       {mainText}
                     </span>
                     {secondaryText && (
-                      <span className="text-[12px] text-slate-500 truncate mt-0.5 font-medium leading-none">
+                      <span className="text-[13px] text-[#64748B] truncate mt-0.5 font-medium leading-none">
                         {secondaryText}
                       </span>
                     )}

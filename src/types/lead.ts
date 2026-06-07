@@ -28,3 +28,34 @@ export interface ContactPayload {
   whatsapp_number?: string;
   enquiry_type?: string;
 }
+
+export type LeadStatus = 'New' | 'Contacted' | 'Quoted' | 'Converted' | 'Rejected';
+
+export interface Lead {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  
+  customer_name: string;
+  phone_number: string;
+  whatsapp_number: string;
+  preferred_contact_method: "WhatsApp" | "Phone Call" | "Either";
+  email: string | null;
+  
+  service_type: string;
+  vehicle_model: string | null;
+  pickup_place_id: string;
+  pickup_city: string;
+  pickup_state: string;
+  drop_place_id: string;
+  drop_city: string;
+  drop_state: string;
+  distance_km: number | null;
+  
+  message: string | null;
+  lead_source: string;
+  status: LeadStatus;
+  
+  admin_notes: string | null;
+  last_contacted_at: string | null;
+}
